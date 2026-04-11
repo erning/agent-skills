@@ -1,0 +1,13 @@
+# Claude Code
+.claude/
+
+# Skill development workspaces
+*-workspace/
+
+# OS files
+.DS_Store
+
+# Editor files
+*.swp
+*.swo
+*~
