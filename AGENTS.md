@@ -1,10 +1,10 @@
-# CLAUDE.md
+# AGENTS.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to coding agents working in this repository.
 
 ## Overview
 
-A personal collection of Claude Code skills. Each skill is a self-contained top-level directory with a `SKILL.md` and optional supporting files.
+A personal collection of agent skills. Each skill is a self-contained top-level directory with a `SKILL.md` and optional supporting files.
 
 ## Skill Structure
 
@@ -19,5 +19,8 @@ skill-name/
 
 - Skill directories use lowercase with hyphens: `git-crypt`, `macos-input-method`
 - Git commits follow Conventional Commits: `feat(skill-name): description`
-- Skill descriptions in frontmatter should be "pushy" — include trigger contexts so Claude invokes the skill when relevant
+- Use `$git-commit-writer` when creating, checking, or amending commits.
+- Skill descriptions in frontmatter should be "pushy" — include trigger contexts so the agent invokes the skill when relevant
+- When a skill invokes bundled scripts, assets, or references, write paths as
+  relative to that skill directory, not relative to the user's target project.
 - `evals.json` assertions use `type: "contains"` for literal checks and `type: "semantic"` for meaning-based checks
