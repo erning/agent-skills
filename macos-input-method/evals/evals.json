@@ -1,0 +1,137 @@
+{
+  "skill_name": "macos-input-method",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Create a minimal Swift macOS input method project called QuickIME using XcodeGen. It should appear in System Settings as an English input source, pass through typed characters for now, and include the build/install instructions I need for local testing.",
+      "expected_output": "Should scaffold a minimal InputMethodKit project with project.yml, Sources/main.swift, Sources/InputController.swift, appropriate Info.plist/XcodeGen keys, sandbox disabled, .inputmethod. bundle identifier, install instructions for ~/Library/Input Methods/, and first-install logout/login guidance.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "xcodegen-project",
+          "text": "Creates or describes a project.yml for a macOS application target",
+          "type": "semantic"
+        },
+        {
+          "id": "inputmethod-bundle-id",
+          "text": ".inputmethod.",
+          "type": "contains"
+        },
+        {
+          "id": "imkserver-entry-point",
+          "text": "Includes Sources/main.swift with IMKServer and NSApplication.shared.run()",
+          "type": "semantic"
+        },
+        {
+          "id": "objc-controller-name",
+          "text": "Includes an IMKInputController subclass with @objc(...) and matches InputMethodServerControllerClass",
+          "type": "semantic"
+        },
+        {
+          "id": "sandbox-disabled",
+          "text": "ENABLE_APP_SANDBOX = NO",
+          "type": "contains"
+        },
+        {
+          "id": "install-instructions",
+          "text": "Explains installing the built .app into ~/Library/Input Methods/ and logging out/in on first install",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "My InputMethodKit app builds, but it never shows up in System Settings > Keyboard > Input Sources after I copy it into ~/Library/Input Methods/. Give me a debugging checklist.",
+      "expected_output": "Should prioritize bundle and discovery checks: install location, bundle identifier containing .inputmethod., LSBackgroundOnly, character repertoire category, first-install logout/login or restart, and optionally programmatic registration.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "install-location",
+          "text": "Checks that the app bundle is installed under ~/Library/Input Methods/ or /Library/Input Methods/",
+          "type": "semantic"
+        },
+        {
+          "id": "bundle-id-rule",
+          "text": ".inputmethod.",
+          "type": "contains"
+        },
+        {
+          "id": "background-only",
+          "text": "Checks that LSBackgroundOnly is true",
+          "type": "semantic"
+        },
+        {
+          "id": "character-repertoire",
+          "text": "Checks tsInputMethodCharacterRepertoireKey and the expected language category such as Latn, Hans, or Jpan",
+          "type": "semantic"
+        },
+        {
+          "id": "first-install-discovery",
+          "text": "Explains that the first install may require logout/login or restart",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "I see '[IMKServer _createConnection]: *Failed* to register NSConnection' when trying my custom input method. What should I check first?",
+      "expected_output": "Should diagnose IMKServer registration failure by checking App Sandbox, InputMethodConnectionName matching IMKServer name, server lifetime, and using NSLog/Console.app for process logs.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "sandbox-root-cause",
+          "text": "Identifies App Sandbox as a likely cause and tells the user to disable it with ENABLE_APP_SANDBOX = NO",
+          "type": "semantic"
+        },
+        {
+          "id": "connection-name-match",
+          "text": "Checks that InputMethodConnectionName exactly matches the name passed to IMKServer(name:bundleIdentifier:)",
+          "type": "semantic"
+        },
+        {
+          "id": "server-lifetime",
+          "text": "Warns that the IMKServer instance must stay alive for the process lifetime",
+          "type": "semantic"
+        },
+        {
+          "id": "console-logging",
+          "text": "Recommends NSLog and Console.app rather than relying on print output",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I want my macOS IME to show marked text while the user types roman letters, then commit a selected candidate on Enter. What InputMethodKit APIs and return values should I use?",
+      "expected_output": "Should explain IMKTextInput, setMarkedText, insertText, NSRange(location: NSNotFound, length: NSNotFound), return true for consumed input and false for passthrough, and mention candidate handling with IMKCandidates or a custom NSPanel.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "marked-text-api",
+          "text": "client.setMarkedText",
+          "type": "contains"
+        },
+        {
+          "id": "commit-api",
+          "text": "client.insertText",
+          "type": "contains"
+        },
+        {
+          "id": "nsrange-convention",
+          "text": "Uses NSRange(location: NSNotFound, length: NSNotFound) when no replacement range is needed",
+          "type": "semantic"
+        },
+        {
+          "id": "return-value-semantics",
+          "text": "Explains that true consumes handled input and false lets input pass through",
+          "type": "semantic"
+        },
+        {
+          "id": "candidate-options",
+          "text": "Mentions IMKCandidates or a custom NSPanel for candidate UI",
+          "type": "semantic"
+        }
+      ]
+    }
+  ]
+}
