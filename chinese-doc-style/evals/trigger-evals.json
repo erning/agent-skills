@@ -1,0 +1,82 @@
+[
+  {
+    "query": "准备把 docs/architecture.md 发给外部合作方。请直接修改这份中文架构文档，统一 GitHub、API 名称、中英文空格和标点，并保留代码块内容。",
+    "should_trigger": true
+  },
+  {
+    "query": "先阅读现有 README，再重写其中的中文安装说明并直接更新文件；这个项目下周开源，命令和路径不要改。",
+    "should_trigger": true
+  },
+  {
+    "query": "请把下面的要点写成一份正式中文 RFC，包含背景、方案、兼容性和迁移计划，供团队评审后归档。",
+    "should_trigger": true
+  },
+  {
+    "query": "docs/api.md 准备随下个版本提交。请直接修订中文接口说明，统一请求参数中的数字和单位格式；JSON 示例必须保持原样。",
+    "should_trigger": true
+  },
+  {
+    "query": "请将这份 2.0 发布说明改成可以直接发布的中文版本，修正 macOS、Windows 和 500MB 等混排问题。",
+    "should_trigger": true
+  },
+  {
+    "query": "修复账户迁移代码后，请同步完善正式中文用户手册里的对应章节，直接写入原 Markdown 文件，并统一术语和链接周边格式。",
+    "should_trigger": true
+  },
+  {
+    "query": "这份中文部署指南准备交付客户，请直接润色并规范排版。保留 `docker compose up`、端口号和所有 URL。",
+    "should_trigger": true
+  },
+  {
+    "query": "CONTRIBUTING.zh-CN.md 准备提交到仓库，请校对并直接修正，统一简体中文、技术名称大小写和列表格式。",
+    "should_trigger": true
+  },
+  {
+    "query": "根据产品团队给的提纲写一篇正式中文帮助中心文章，介绍如何导出 10 GB 以上的项目数据。",
+    "should_trigger": true
+  },
+  {
+    "query": "白皮书终稿在 docs/whitepaper.md，请做发布前的严格中文修订并直接保存，确保链接、公式和标识符不被改动。",
+    "should_trigger": true
+  },
+  {
+    "query": "阅读 docs/architecture.md，总结系统由哪些服务组成，并画出调用关系。不要修改文件。",
+    "should_trigger": false
+  },
+  {
+    "query": "看看 README，告诉我本地开发要依次运行哪些 npm 命令，只需要回答，不要改文档。",
+    "should_trigger": false
+  },
+  {
+    "query": "从这份中文 API 文档中提取所有 endpoint、请求方法和认证方式，整理成表格。",
+    "should_trigger": false
+  },
+  {
+    "query": "比较 design-v1.md 和 design-v2.md 的方案差异，重点说明缓存策略发生了什么变化。不要编辑原文。",
+    "should_trigger": false
+  },
+  {
+    "query": "审查这份中文需求文档有没有逻辑漏洞，只列出风险和建议，不要重写或修改文档。",
+    "should_trigger": false
+  },
+  {
+    "query": "检查 README 的中英文空格和标点是否规范，只报告发现的问题，不要修改任何内容。",
+    "should_trigger": false
+  },
+  {
+    "query": "README 里写了 `npm run dev`，但我执行后端口 3000 被占用。帮我定位代码或环境问题。",
+    "should_trigger": false
+  },
+  {
+    "query": "把日志里的英文错误消息 ‘Connection reset by peer’ 翻译成中文，直接在聊天里告诉我意思。",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我润色一条发到微信群的消息：今晚8点发布v2.0，大家记得更新。语气轻松一点。",
+    "should_trigger": false
+  },
+  {
+    "query": "Write an English README for this Swift package, including installation and usage examples.",
+    "should_trigger": false
+  }
+]

@@ -72,28 +72,28 @@
     },
     {
       "id": 4,
-      "prompt": "请审查下面的发布说明，只列出问题、修改建议和理由，不要直接重写全文：软件支援Windows和macOS,下载档案约有500MB。详情请[点击这里](https://example.com/download)查看。",
-      "expected_output": "以审查模式指出简繁混用或地区词汇、官方大小写、中英文和数字单位空格、中文标点以及链接周边空格问题，并给出对应建议。",
+      "prompt": "请直接修改下面的正式发布说明，输出可发布的完整版本：软件支援Windows和macOS,下载档案约有500MB。详情请[点击这里](https://example.com/download)查看。",
+      "expected_output": "直接给出规范化后的完整发布说明，统一中国大陆用词、官方大小写、中英文和数字单位空格、中文标点以及链接周边空格。",
       "files": [],
       "assertions": [
         {
-          "id": "review-mode",
-          "text": "以问题清单或审查意见呈现，而不是只输出一段重写后的正文。",
+          "id": "direct-revision",
+          "text": "直接输出修改后的完整发布说明，而不是只列出问题或建议。",
           "type": "semantic"
         },
         {
           "id": "mainland-terms",
-          "text": "建议将“支援”改为“支持”，将“档案”改为“文件”。",
+          "text": "输出将“支援”改为“支持”，将“档案”改为“文件”。",
           "type": "semantic"
         },
         {
           "id": "product-and-spacing",
-          "text": "建议使用“Windows 和 macOS”并将“500MB”改为“500 MB”。",
+          "text": "输出使用“Windows 和 macOS”并将“500MB”改为“500 MB”。",
           "type": "semantic"
         },
         {
           "id": "link-spacing",
-          "text": "建议在中文正文与 Markdown 链接之间增加空格，例如“请 [点击这里](https://example.com/download) 查看”。",
+          "text": "输出在中文正文与 Markdown 链接之间增加空格，例如“请 [点击这里](https://example.com/download) 查看”。",
           "type": "semantic"
         }
       ]
