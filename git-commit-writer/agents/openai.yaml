@@ -1,4 +1,4 @@
 interface:
   display_name: "Git Commit Writer"
   short_description: "Write strict Conventional Commit messages"
-  default_prompt: "Use $git-commit-writer to inspect the staged changes and create a compliant Git commit."
+  default_prompt: "Use $git-commit-writer to write a compliant commit message for the current changes."
