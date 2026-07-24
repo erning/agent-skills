@@ -1,0 +1,82 @@
+{
+  "skill_name": "chinese-stem-terminology",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "请把这段 A Level 笔记翻译成简体中文，并使用中国大陆常见的数学和物理术语：数学：A vector has both magnitude and direction. 物理：The velocity vector describes the rate of change of displacement.",
+      "expected_output": "翻译准确，并根据学科语境区分数学中的“向量”和物理中的“矢量”；不把不同学科的用词机械统一。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "math-vector",
+          "text": "数学概念使用“向量”。",
+          "type": "semantic"
+        },
+        {
+          "id": "physics-vector",
+          "text": "物理语境中的 velocity vector 使用“速度矢量”或含义相同的中国大陆物理术语。",
+          "type": "semantic"
+        },
+        {
+          "id": "meaning-preserved",
+          "text": "保留矢量具有大小和方向，以及速度描述位移变化率的原意。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "把下面的计算机笔记改成中国大陆常用术语，并直接给出修改后的文本：这个软体采用物件导向程式设计。作业系统的程序由核心负责排程，资料存放在硬碟中。",
+      "expected_output": "将港台地区用词改为中国大陆计算机专业用词，同时根据操作系统语境正确处理 process 和 kernel 等概念。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "regional-terms",
+          "text": "包含“软件”“面向对象程序设计”“操作系统”“数据”和“硬盘”。",
+          "type": "semantic"
+        },
+        {
+          "id": "os-context",
+          "text": "将操作系统语境中的“程序”改为“进程”，将“核心”改为“内核”，将“排程”改为“调度”。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "审校这段数据库说明中的术语，但不要修改代码、标识符或英文检索键：The normalisation step 把 user_record 拆成多个 relation。运行 `normalise(user_record)` 后，每个 record 都有 primary key。",
+      "expected_output": "把中文对应项规范为数据库语境中的“规范化”“关系”“记录”和“主键”，同时原样保留英文、行内代码和标识符。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "database-terms",
+          "text": "数据库语境使用“规范化”“关系”“记录”和“主键”。",
+          "type": "semantic"
+        },
+        {
+          "id": "protected-content",
+          "text": "原样保留 The normalisation step、user_record、relation、`normalise(user_record)`、record 和 primary key。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "请检查这句话里的专业译名是否规范：量子系统的 eigenvalue 一律只能翻译成“特征值”，这是中国唯一官方标准。只给出有依据的修改建议。",
+      "expected_output": "不无依据地认可“唯一官方标准”的说法；指出量子物理中“本征值”也是中国大陆常见术语，并建议根据教材、项目术语表或指定标准确定。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "no-false-authority",
+          "text": "不把“特征值”宣称为中国唯一官方标准。",
+          "type": "semantic"
+        },
+        {
+          "id": "contextual-alternative",
+          "text": "指出量子物理语境常用“本征值”，并建议依据目标资料或项目约定选择。",
+          "type": "semantic"
+        }
+      ]
+    }
+  ]
+}

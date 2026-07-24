@@ -1,0 +1,4 @@
+interface:
+  display_name: "中国大陆 STEM 术语规范"
+  short_description: "规范数学、物理、计算机和化学文本中的中国大陆专业术语"
+  default_prompt: "使用 $chinese-stem-terminology 规范这篇 STEM 文本中的中文术语和译名。"
