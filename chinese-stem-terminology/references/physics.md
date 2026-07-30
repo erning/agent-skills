@@ -2,6 +2,8 @@
 
 以下双语词表整理自 [Obsidian-A-Level-STEM 的物理术语笔记](https://github.com/erning/Obsidian-A-Level-STEM/blob/master/80%20References/Terminology%20-%20Physics.md)。英文列用作检索键，中文列记录中国大陆通行用法。词表主要覆盖 CAIE A Level 课程范围，是本 skill 的种子参考，不代表完整或唯一的官方标准。
 
+当前内容同步至上游提交 `4877cc7`（2026-07-30）。
+
 ## 目录
 
 - [测量、物理量与实验](#测量物理量与实验)
@@ -76,7 +78,6 @@
 | work | 功 |
 | energy | 能量 |
 | kinetic energy | 动能 |
-| gravitational potential energy (near-Earth mechanics) | 重力势能 |
 | power | 功率 |
 | efficiency | 效率 |
 | deformation | 形变 |
@@ -93,13 +94,13 @@
 | plastic deformation | 塑性形变 |
 | elastic limit | 弹性极限 |
 | circular motion | 圆周运动 |
-| angular speed | 角速度 |
+| angular speed | 角速度（标量，亦称角速率） |
 | centripetal acceleration | 向心加速度 |
 | centripetal force | 向心力 |
 | gravitational field | 引力场 |
-| gravitational field strength | 引力场强 |
+| gravitational field strength | 引力场强度 |
 | gravitational potential | 引力势 |
-| gravitational potential energy (gravitational field) | 引力势能 |
+| gravitational potential energy | 引力势能（近地面为重力势能） |
 
 ## 波、振动与热学
 

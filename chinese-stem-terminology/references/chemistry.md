@@ -2,6 +2,8 @@
 
 以下双语词表整理自 [Obsidian-A-Level-STEM 的化学术语笔记](https://github.com/erning/Obsidian-A-Level-STEM/blob/master/80%20References/Terminology%20-%20Chemistry.md)。英文列用作检索键，中文列记录中国大陆通行用法。词表主要覆盖 CAIE A Level 课程范围，是本 skill 的种子参考，不代表完整或唯一的官方标准。
 
+当前内容同步至上游提交 `4877cc7`（2026-07-30）。
+
 ## 目录
 
 - [课程结构术语](#课程结构术语)

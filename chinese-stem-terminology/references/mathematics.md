@@ -2,6 +2,8 @@
 
 以下双语词表整理自 [Obsidian-A-Level-STEM 的数学与进阶数学术语笔记](https://github.com/erning/Obsidian-A-Level-STEM/blob/master/80%20References/Terminology%20-%20Mathematics%20and%20Further%20Mathematics.md)。英文列用作检索键，中文列记录中国大陆通行用法。词表主要覆盖 CAIE A Level 课程范围，是本 skill 的种子参考，不代表完整或唯一的官方标准。
 
+当前内容同步至上游提交 `4877cc7`（2026-07-30）。
+
 ## 目录
 
 - [纯数学](#纯数学)
@@ -143,7 +145,7 @@
 | conditional probability | 条件概率 |
 | random variable | 随机变量 |
 | probability distribution | 概率分布 |
-| expectation | 期望 |
+| expectation | 数学期望（简称期望） |
 | binomial distribution | 二项分布 |
 | geometric distribution | 几何分布 |
 | normal distribution | 正态分布 |

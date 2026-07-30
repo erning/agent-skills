@@ -2,6 +2,8 @@
 
 以下双语词表整理自 [Obsidian-A-Level-STEM 的计算机科学术语笔记](https://github.com/erning/Obsidian-A-Level-STEM/blob/master/80%20References/Terminology%20-%20Computer%20Science.md)。英文列用作检索键，中文列记录中国大陆通行用法。词表主要覆盖 CAIE A Level 课程范围，是本 skill 的种子参考，不代表完整或唯一的官方标准。
 
+当前内容同步至上游提交 `4877cc7`（2026-07-30）。
+
 ## 目录
 
 - [课程结构与核心概念](#课程结构与核心概念)
@@ -57,8 +59,8 @@
 | hexadecimal | 十六进制 |
 | binary prefix | 二进制前缀 |
 | decimal prefix | 十进制前缀 |
-| kibi, mebi, gibi, tebi | kibi、mebi、gibi、tebi |
-| kilo, mega, giga, tera | kilo、mega、giga、tera |
+| kibi, mebi, gibi, tebi | kibi、mebi、gibi、tebi<br>Ki 2¹⁰、Mi 2²⁰、Gi 2³⁰、Ti 2⁴⁰ |
+| kilo, mega, giga, tera | 千、兆、吉、太<br>k 10³、M 10⁶、G 10⁹、T 10¹² |
 | Binary Coded Decimal (BCD) | 二进制编码十进制（BCD） |
 | one's complement | 反码 |
 | two's complement | 补码 |
@@ -67,8 +69,7 @@
 | character set | 字符集 |
 | ASCII | ASCII |
 | Unicode | Unicode |
-| bitmapped image | 位图图像 |
-| bitmap image | 位图图像 |
+| bitmapped image, bitmap image | 位图图像 |
 | vector graphic | 矢量图形 |
 | pixel | 像素 |
 | file header | 文件头 |
@@ -126,7 +127,7 @@
 | IP address | IP 地址 |
 | subnetting | 子网划分 |
 | Uniform Resource Locator (URL) | 统一资源定位符（URL） |
-| Domain Name Service (DNS) | 域名系统（DNS） |
+| Domain Name Service (DNS) | 域名服务（DNS，常称“域名系统”） |
 | input device | 输入设备 |
 | output device | 输出设备 |
 | primary memory | 主存储器 |
@@ -289,7 +290,7 @@
 | relational operator | 关系运算符 |
 | sequence | 顺序结构 |
 | selection | 选择结构 |
-| iteration, repetition | 迭代、重复 |
+| iteration, repetition | 迭代（循环）、重复 |
 | IF statement | IF 语句 |
 | CASE structure | CASE 结构 |
 | count-controlled loop | 计数控制循环 |
@@ -306,7 +307,7 @@
 | pass by value | 按值传递 |
 | pass by reference | 按引用传递 |
 | array | 数组 |
-| index | 索引 |
+| index | 下标 |
 | upper bound | 上界 |
 | lower bound | 下界 |
 | one-dimensional array | 一维数组 |
