@@ -12,7 +12,7 @@ Claude Code 等 coding agents。
 | Skill | 说明 |
 | --- | --- |
 | `chinese-doc-style` | 统一中文和中英文混排文档格式 |
-| `conversation-namer` | 按日期、类型和主题规范会话标题，预览并确认后重命名 |
+| `conversation-namer` | 按日期、类型和主题规范编程智能体的会话标题，预览并确认后重命名 |
 | `git-crypt` | 在 Git 仓库中配置和使用 `git-crypt` |
 | `git-commit-writer` | 检查改动并创建严格的 Conventional Commit |
 | `humanizer` | 去除英文文本中的 AI 写作痕迹 |
