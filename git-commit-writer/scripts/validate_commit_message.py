@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate a commit message against the git-commit-writer policy."""
+"""Check commit message formatting and common attribution statements."""
 
 from __future__ import annotations
 
@@ -13,11 +13,23 @@ PREFERRED_LINE_LENGTH = 78
 MAX_LINE_LENGTH = 80
 SUBJECT_RE = re.compile(
     r"^(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)"
-    r"\([a-z0-9][a-z0-9._-]*\)!?: [a-z0-9].*[^.]$"
+    r"\([a-z0-9][a-z0-9._-]*\)!?: (?P<description>[a-z].*)$"
 )
-FORBIDDEN_RE = re.compile(
-    r"(?i)(co-authored-by|generated-(?:by|with)|"
-    r"(?:claude|chatgpt|codex|copilot|gemini).*(?:generated|authored))"
+ATTRIBUTION_TRAILER_RE = re.compile(
+    r"(?i)^(?:co-authored-by|authored-by|signed-off-by|generated-by|generated-with):"
+)
+TOOL_NAME = (
+    r"(?:claude(?: code)?|chatgpt|codex|(?:github )?copilot|gemini|openai|anthropic)"
+)
+TOOL_CREDIT = rf"(?:{TOOL_NAME}|\[{TOOL_NAME}\]\([^\s()]+\))"
+GENERATION_ATTRIBUTION_RE = re.compile(
+    rf"(?i)^(?:(?:generated|written|authored|co-authored|created)"
+    rf"[ -](?:by|with|using) {TOOL_CREDIT}"
+    r"|this (?:commit(?: message)?|message) (?:was |is )?"
+    r"(?:generated|written|authored|co-authored|created)[ -](?:by|with|using) .+"
+    rf"|{TOOL_CREDIT} (?:generated|wrote|authored|created) "
+    r"(?:this|the) (?:commit(?: message)?|message)"
+    r"|ai[ -]generated(?: (?:commit(?: message)?|message))?)[.!]?$"
 )
 
 
@@ -49,18 +61,24 @@ def validate(message: str) -> list[str]:
             errors.append(f"line {number} has trailing whitespace")
 
     subject = lines[0]
-    if not SUBJECT_RE.fullmatch(subject):
+    if not SUBJECT_RE.fullmatch(subject) or subject.endswith("."):
         errors.append(
             "subject must match 'type(scope): description' with an allowed type, "
-            "a lowercase scope, an imperative lowercase description, and no period"
+            "a scope starting with [a-z0-9] and containing only [a-z0-9._-], "
+            "and a description starting with [a-z] and no trailing period"
         )
 
     if len(lines) < 3 or lines[1] != "" or not lines[2].strip():
         errors.append("a non-empty body must follow the subject after one blank line")
 
-    match = FORBIDDEN_RE.search(message)
-    if match:
-        errors.append(f"forbidden attribution found: {match.group(0)!r}")
+    # Match attribution lines, not tool names or field names inside change prose.
+    # This catches common forms; it does not establish semantic compliance.
+    for number, line in enumerate(lines, start=1):
+        candidate = line.strip()
+        if ATTRIBUTION_TRAILER_RE.match(candidate) or (
+            GENERATION_ATTRIBUTION_RE.fullmatch(candidate)
+        ):
+            errors.append(f"forbidden attribution on line {number}: {candidate!r}")
 
     return errors
 
@@ -98,7 +116,7 @@ def main() -> int:
     for notice in warnings(message):
         print(f"warning: {notice}", file=sys.stderr)
 
-    print("Commit message is valid.")
+    print("Commit message passes mechanical checks; content review is still needed.")
     return 0
 
 

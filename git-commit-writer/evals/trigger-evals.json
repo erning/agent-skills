@@ -1,0 +1,50 @@
+[
+  {
+    "query": "提交一下。",
+    "should_trigger": true
+  },
+  {
+    "query": "把刚才的改动 commit 掉。",
+    "should_trigger": true
+  },
+  {
+    "query": "请为当前改动起草一条提交信息，先不要提交。",
+    "should_trigger": true
+  },
+  {
+    "query": "检查这条 commit message 是否符合我的约定。",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我修改上一条提交信息，准确说明修复原因。",
+    "should_trigger": true
+  },
+  {
+    "query": "Write a Conventional Commit message for this diff.",
+    "should_trigger": true
+  },
+  {
+    "query": "查看最近五条提交，告诉我哪个改动引入了问题。",
+    "should_trigger": false
+  },
+  {
+    "query": "解释一下 git rebase 和 merge 的区别。",
+    "should_trigger": false
+  },
+  {
+    "query": "把当前分支改名为 fix/cache。",
+    "should_trigger": false
+  },
+  {
+    "query": "请直接重写中文 README 的安装说明，暂时不要提交。",
+    "should_trigger": false
+  },
+  {
+    "query": "把已有提交推送到远程分支。",
+    "should_trigger": false
+  },
+  {
+    "query": "修复缓存过期判断，不用准备提交信息。",
+    "should_trigger": false
+  }
+]
