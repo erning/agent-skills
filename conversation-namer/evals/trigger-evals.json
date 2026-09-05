@@ -1,0 +1,34 @@
+[
+  {
+    "query": "Standardize the coding-agent conversation titles in this project.",
+    "should_trigger": true
+  },
+  {
+    "query": "Rename my coding-agent sessions by date and topic.",
+    "should_trigger": true
+  },
+  {
+    "query": "Preview clearer titles for these exported coding conversations without changing anything.",
+    "should_trigger": true
+  },
+  {
+    "query": "Apply the conversation-title changes I approved earlier.",
+    "should_trigger": true
+  },
+  {
+    "query": "Rename the conversation-namer skill directory to title-helper.",
+    "should_trigger": false
+  },
+  {
+    "query": "Give the project README a new heading.",
+    "should_trigger": false
+  },
+  {
+    "query": "Rename this project without changing any conversation titles.",
+    "should_trigger": false
+  },
+  {
+    "query": "Summarize these coding conversations without renaming them.",
+    "should_trigger": false
+  }
+]

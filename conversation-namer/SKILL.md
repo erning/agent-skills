@@ -1,151 +1,155 @@
 ---
 name: conversation-namer
 description: >-
-  Use when the user asks to rename or standardize session titles in coding
-  agents. Apply MMDD｜TYPE｜Topic, defaulting to Chinese with English on request.
-  Preview changes and obtain confirmation before renaming. Change titles only,
-  preserving projects and conversation content.
+  Rename or standardize conversation titles in coding agents using
+  MMDD｜TYPE｜Topic. Default to Chinese titles and preview changes before
+  renaming; honor existing explicit authorization. Change titles only.
+  Project, file, and skill renaming are outside this skill's scope.
 ---
 
-# 会话命名
+# Conversation Naming
 
-在用户指定的范围内重命名编程智能体的会话。命名规则保持统一，读取会话和修改标题的
-方法根据目标智能体的实际机制确定。
-执行本 skill 的智能体与目标会话所属的智能体不一定相同，不要因此扩大处理范围。
+Rename conversations within the user's selected scope. Use the target coding
+agent's actual capabilities; the agent running this skill may differ from the
+agent that owns the conversations.
 
-## 范围与能力
+## Scope and capabilities
 
-- 先确认目标会话所属的编程智能体，再使用用户选中的会话，或指定的项目、工作区、
-  工作目录等范围。对于“当前项目”，根据目标智能体的上下文、会话元数据或项目与
-  工作目录的关联确定范围；存在歧义时，不得仅凭显示名称匹配。
-- 遵循用户明确指定的范围和筛选条件。对于支持置顶或归档的智能体，默认处理范围内
-  未归档的会话，包括已置顶的会话；只有用户要求时才包含已归档会话，读取时不得取消
-  归档。不要假设所有智能体都有置顶或归档状态。
-- 如果目标智能体没有项目概念，使用明确指定的工作目录或会话集合。无法确定范围时，
-  先用一个简短问题澄清，再准备方案；不得自行扩大到其他项目或其他智能体的会话。
-- 不同编程智能体的会话存储、项目关联、标题字段和改名入口可能不同。根据目标智能体的
-  文档、实现或当前环境提供的工具确认实际机制，不要假设某个智能体的工具或字段通用于
-  其他智能体。
-- 优先使用目标智能体提供的会话管理工具、命令、API 或界面操作。若需要修改本地
-  会话存储，先确认数据格式和标题更新机制，并确保只改标题相关元数据。不得在机制
-  未确认时直接修改会话文件或内部数据库；无法确认能只改标题时，保留预览并说明限制。
-- 获取稳定的会话 ID 或其他无歧义的定位信息、当前标题、所属范围、原始创建时间，以及
-  足以判断主题的会话内容或可靠摘要。存在分页时，继续读取，覆盖完整的指定范围。
-- 本 skill 用 `createdAt` 表示会话的原始创建时间，不要求每个智能体都有同名字段。
-  只有含义等价时，才可使用目标智能体的 `created_at` 等其他字段或会话创建记录。
-- 如果环境只能读取会话或用户提供的导出数据，在信息足够时生成预览，并在展示预览前
-  说明缺少修改能力。不得把生成建议标题表述为已完成改名。
+- Identify the target agent and use the selected conversations, project,
+  workspace, or working directory. Resolve "current project" from that agent's
+  context and metadata, not an ambiguous display name. If scope cannot be
+  determined, ask one short question before preparing the plan.
+- Follow the user's filters. Where supported, include pinned conversations and
+  exclude archived ones by default; include archived conversations only when
+  requested, without unarchiving them. Read all pages needed to cover the
+  scope.
+- Prefer the target agent's supported management tools, commands, API, or UI.
+  Before editing local storage, establish its format and title-update
+  mechanism. Do not assume another agent's tools, fields, or storage layout
+  apply.
+- Collect stable IDs or equally unambiguous locators, current titles, scope,
+  original creation times, and enough content or reliable summaries to infer
+  topics. Display names and preview row numbers are not reliable locators.
+- If only exports or read access are available, explain that limitation before
+  showing suggested titles. Do not present a preview as completed renaming.
 
-只修改会话标题。不得重命名项目或分组、编辑会话内容、移动会话、调整顺序，或改变置顶、
-归档状态。如果已知某种改名方式会连带改变上述状态，不要使用该方式，并说明限制。
-不得通过额外的移动或排序操作补偿这些副作用。
+Change titles only. Preserve project and group names, conversation content,
+location, ordering, and pinned or archived state. If the available method has
+known side effects on these fields, or cannot be verified to update only
+titles, provide a preview and explain the limitation. Do not compensate with
+extra move, sort, or state-changing operations.
 
-## 命名规则
+## Naming rules
 
-严格使用以下格式，三个字段依次表示日期、类型和主题：
+Use exactly three fields, separated by the fullwidth vertical bar `｜`
+(U+FF5C), with no spaces around the separators:
 
 ```text
 MMDD｜TYPE｜Topic
 ```
 
-分隔符使用全角竖线 `｜`（U+FF5C），两侧不加空格。它用于清楚地区分三个字段，
-同时避免与 Markdown 表格使用的半角竖线 `|` 混淆。
+### Date
 
-### 日期
+- Convert the original creation time to `Asia/Shanghai` and format it as
+  `MMDD`, padding month and day with zeroes. For example,
+  `2026-09-03T17:30:00Z` gives `0904`.
+- `createdAt` here means original creation time, not a required field name.
+  Accept `created_at` or a creation record only when its meaning is
+  equivalent. Establish timestamp units and source timezone; do not guess for
+  ambiguous local times.
+- Never substitute `updatedAt`, recent activity, export time, file timestamps,
+  today's date, or a date already present in the title. Keep the existing
+  title when original creation time cannot be established.
 
-- 将原始 `createdAt` 转换到 `Asia/Shanghai` 时区，再提取 `MMDD`。月和日均补齐
-  两位，例如 `2026-09-03T17:30:00Z` 应得到 `0904`。
-- 根据目标智能体的字段定义解释时间戳单位和来源时区。对于时区不明确的本地时间，
-  不得自行假设时区偏移量。
-- 不得用 `updatedAt`、最近活动时间、导出时间、文件时间戳、当前日期，或原标题中
-  已有的日期代替原始创建时间。
-- 无法确认原始创建时间时，保留原标题。
+### Type and language
 
-### 类型
+Choose the type from the conversation's main purpose or substantive outcome,
+not merely its existing title or final incidental action. Committing a bug fix
+at the end does not make that conversation a release task.
 
-根据会话内容的主要目的或结果选择类型，不得仅凭原标题判断。
-
-| 中文标签（默认） | 英文代码 | 适用内容 |
+| Chinese label (default) | English code | Purpose |
 | --- | --- | --- |
-| 功能 | FEA | 新增功能或能力 |
-| 设计 | DES | 设计行为、架构、界面或实施方案 |
-| 修复 | FIX | 定位或修复缺陷 |
-| 优化 | OPT | 改进现有行为、性能或易用性 |
-| 发布 | REL | 准备发布、正式发布或交付变更 |
-| 探索 | EXP | 尝试方案、制作原型或验证可行性 |
-| 文档 | DOC | 编写或维护文档 |
-| 研究 | RES | 通过资料、证据或比较来研究问题 |
+| 功能 | FEA | Add functionality or capabilities |
+| 设计 | DES | Design behavior, architecture, interfaces, or implementation plans |
+| 修复 | FIX | Diagnose or fix defects |
+| 优化 | OPT | Improve behavior, performance, or usability |
+| 发布 | REL | Prepare, publish, or deliver a release or change |
+| 探索 | EXP | Explore approaches, prototype, or test feasibility |
+| 文档 | DOC | Write or maintain documentation |
+| 研究 | RES | Investigate questions through sources, evidence, or comparisons |
 
-默认使用中文标签。只有用户明确要求英文类型或英文标题时，才使用英文代码。
-用户消息或会话内容使用英文，本身不构成切换到英文类型的要求。同一批新标题的类型
-必须统一使用中文标签或英文代码，不能混用；不同会话可以选择不同类型。
+Default to Chinese type labels and Simplified Chinese topics. Use English
+codes only when explicitly requested for types or whole titles; use English
+topics only when explicitly requested for topics or whole titles. A request
+for one field's language does not change the other field. The language of
+these instructions, the user request, or the existing conversation does not
+change these defaults. Keep the type-label language consistent within each
+batch of new titles; individual conversations may use different types.
 
-如果会话包含多种活动，以主要的实质性结果为准。例如，最后顺手提交了代码，并不意味着
-修复缺陷的会话应归为“发布”。仍无法判断类型时，保留原标题。
+### Topic
 
-### 主题
+- Use a short, specific phrase suitable for a sidebar or terminal list. Read
+  more content when summaries are insufficient. Keep the existing title if the
+  topic or type remains uncertain.
+- Avoid repeating project or group names and vague topics such as "discussion"
+  or "miscellaneous fixes". Preserve useful technical names and identifiers.
+- Do not put another `｜` or a line break inside the topic.
+- Leave titles unchanged when their date, type, topic, and language already
+  meet the requested rules. Replace an existing prefix instead of stacking
+  prefixes.
 
-- 默认用简体中文概括会话实际讨论的内容。只有用户明确要求英文主题或英文标题时，
-  才改用英文；不要仅因原会话使用英文就自动切换。
-- 使用适合侧边栏或终端会话列表显示的简短、具体短语。摘要不足时读取更多内容；
-  仍无法判断主题时，保留原标题。
-- 不要重复项目或分组名称。避免“讨论”“更新”“各种修复”等笼统主题。
-- 保留有助于识别主题的技术名称和标识符，不必强行翻译。用户仅指定类型语言时，
-  不改变主题的语言；仅指定主题语言时，也不改变类型的语言。
-- 主题内不再添加 `｜` 分隔符或换行。
-- 已符合本次语言要求、格式正确且主题准确的标题保持不变。修改已有结构化标题时，
-  替换原前缀，不要再叠加一层前缀。
+Examples assume creation metadata produces the dates shown and conversation
+content supports the topics; do not infer those facts from the old titles
+alone.
 
-以下示例假设原始创建时间换算到上海时区后，月日与所示前缀一致。实际执行时，必须
-根据元数据和会话内容确定日期及主题。
-
-默认使用中文标题：
+Default Chinese titles:
 
 | Before | After |
 | --- | --- |
 | Improve batch text display | 0903｜优化｜批次文字显示 |
-| 新功能讨论 | 0901｜设计｜界面对齐检查 |
-| 提交代码到 GitHub | 0813｜发布｜提交代码到 GitHub |
+| Design alignment checks | 0901｜设计｜界面对齐检查 |
+| Prepare v1.0 release | 0813｜发布｜准备 v1.0 发布 |
 
-用户明确要求英文标题时：
+When the user explicitly requests English titles:
 
 | Before | After |
 | --- | --- |
 | 优化批次文字显示 | 0903｜OPT｜Batch text display |
 | 新功能讨论 | 0901｜DES｜UI alignment check |
 
-## 预览与确认
+## Preview and authorization
 
-修改任何标题前，先准备完整方案。预览回复只能包含两列表格，严格使用以下表头：
+By default, show the proposed changes and wait for confirmation before
+writing. Use a `Before` / `After` table in retrieval order, preserving and
+escaping the actual titles. Add IDs, status columns, or brief notes when
+needed to distinguish names or explain skips. Show unchanged titles for
+skipped or compliant entries. Retain each row's stable ID, scope, original
+title, and proposed title.
 
-```markdown
-| Before | After |
-| --- | --- |
-```
+- Execute an already approved plan without asking for the same confirmation.
+- If the user explicitly skips preview and authorizes applying these rules to
+  a defined scope, proceed within that authorization. A generic request to
+  standardize titles still follows the default preview process.
+- An instruction to apply an exact final title to a specified conversation
+  authorizes that change. Directional feedback alone requires an updated plan
+  and confirmation; newly requested scope also needs authorization.
+- Report an empty scope directly. Explain missing access or ask for unresolved
+  scope information instead of inventing preview rows.
 
-- 按读取到的顺序列出范围内的会话。对于跳过或已经符合要求的会话，两列均填写原标题。
-- 在表格中保留实际标题，按需转义 Markdown 字符。不要在预览中添加 ID、状态说明、
-  额外评论或其他列。
-- 在内部保留每一行与会话稳定 ID、所属范围、原标题和拟用标题之间的对应关系。
-  不同会话可能同名，不得仅凭标题或行号定位改名对象。
-- 表格结束后即结束回复，等待用户确认。最初的改名请求不代表用户已确认尚未展示的方案。
-- 如果用户调整方案，先展示更新后的表格，再执行。用户可以确认全部变更，也可以明确
-  指定其中一部分。
+## Apply and verify
 
-范围内没有会话时，直接报告这一结果，不要编造表格行。如果因缺少访问能力或范围未明确
-而无法生成有效预览，说明具体限制或询问缺失信息，不要猜测。
+Update only authorized entries whose titles need changing. Before each write,
+recheck the retained stable ID, current title, and scope. If the title or
+scope has changed since preparation, skip that entry and report the conflict.
+When approval covered only the listed entries, newly discovered conversations
+require separate authorization.
 
-## 执行与结果
+Use the established update mechanism. After a timeout or uncertain response,
+read the current title before retrying; if it already matches, do not write it
+again. Verify the final title by rereading or using the update response's
+final value. Stop retrying when success cannot be established or further
+action would exceed the authorized scope.
 
-用户确认后，只修改已获确认且与原标题不同的条目。使用之前保留的 ID 或定位信息，
-在每次修改前重新核对当前标题和所属范围。如果任一项相较预览时发生变化，跳过该会话，
-并报告冲突。新发现的会话需要另行展示方案，不在此前确认范围内。
-
-使用已确认适用于目标智能体的改名方法，只更新标题相关元数据。如果操作超时或结果
-不确定，重试前先读取当前标题；若已与确认的标题一致，不再重复写入。通过重新读取，
-或更新响应中返回的最终标题验证结果。无法确认成功，或继续操作会超出已确认范围时，
-停止重试。
-
-执行后只报告结果：成功改名的会话、未变更或跳过的条目，以及失败项和简短原因。
-可以使用紧凑的结果表格。不得把未经验证的变更说成成功，不要附加无关建议、后续工作
-邀请或项目管理操作。
+Report renamed, unchanged, skipped, and failed entries with brief reasons
+where needed. Do not claim unverified success or append unrelated suggestions,
+follow-up invitations, or project-management actions.

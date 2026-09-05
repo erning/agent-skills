@@ -1,0 +1,128 @@
+{
+  "skill_name": "conversation-namer",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Standardize the conversation titles in the current project; preview first. Available data: ID=a, title=Fix, original creation time=2026-09-03T17:30:00Z, content=fix a cache expiry bug; ID=b, title=Research, original creation time unknown, latest activity=2026-09-05T10:00:00Z, content=compare databases.",
+      "expected_output": "Preview a as 0904｜修复｜缓存过期错误 or an equivalent Chinese topic. Leave b unchanged and explain the missing creation time. Wait for confirmation.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "original-time",
+          "text": "Convert the original creation time of a to Shanghai time to obtain 0904; do not use the latest activity time of b.",
+          "type": "semantic"
+        },
+        {
+          "id": "explain-skip",
+          "text": "Explain why b is skipped, using a note or an additional table column if helpful.",
+          "type": "semantic"
+        },
+        {
+          "id": "preview-default",
+          "text": "Show a plan without writing or claiming the titles have already changed.",
+          "type": "semantic"
+        },
+        {
+          "id": "english-request-chinese-title",
+          "text": "Keep Chinese type labels and topics even though the request and source titles are in English.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I approved the previous plan: change only ID=a from \"Fix\" to \"0904｜修复｜缓存过期错误\". Execute it now. A fresh read shows the ID and project are unchanged, but another person changed the current title to \"Cache review\".",
+      "expected_output": "Reuse the approval, but skip a and report the title conflict instead of overwriting the concurrent update. Do not ask for the same batch approval again.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "reuse-approval",
+          "text": "Reuse the existing authorization without presenting the unchanged plan for confirmation again.",
+          "type": "semantic"
+        },
+        {
+          "id": "concurrent-change",
+          "text": "Skip a and report that its title changed; do not overwrite the new title.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "Apply the default naming rules directly to these two conversations in project P. Skip the preview; I authorize changing their titles. Data: ID=a, old title=Fix cache, createdAt=2026-09-03T17:30:00Z, topic=fix cache expiry; ID=b, old title=Design export, createdAt=2026-09-02T01:00:00Z, topic=design the export API. The available tool changes only titles and returns their final values.",
+      "expected_output": "Rename and verify the two specified conversations within the authorized scope, using Chinese titles with dates 0904 and 0902. Do not stop for duplicate confirmation.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "direct-authorization",
+          "text": "Honor the explicit instruction to skip preview and complete the authorized changes and verification.",
+          "type": "semantic"
+        },
+        {
+          "id": "title-only",
+          "text": "Change only the titles of a and b in project P, preserving project names, archived and pinned state, ordering, and conversation content.",
+          "type": "semantic"
+        },
+        {
+          "id": "language",
+          "text": "Use Chinese type labels and topics under the default rules despite the English original titles.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "Rename the conversation represented in this export: ID=a, old title=Draft, createdAt=2026-09-03T01:00:00Z, content=write an installation guide. The current environment can only read the export and cannot modify conversations in the original application.",
+      "expected_output": "Explain the lack of write access before presenting a suggested title or preview. Do not claim the original application was updated.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "read-only-result",
+          "text": "Distinguish a suggested title from an executed change and state the missing write capability.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "Preview a title for ID=a, currently \"Improve cache\", originally created at 2026-09-03T17:30:00Z. The conversation is about improving cache lookup performance. Use English type codes only; keep the topic in Simplified Chinese.",
+      "expected_output": "Preview a title such as 0904｜OPT｜缓存查询性能. Use the explicit language choice for the type only, preserve a Chinese topic, and wait for confirmation.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "independent-language-fields",
+          "text": "Use OPT for the type and Simplified Chinese for the topic; do not switch the whole title to English.",
+          "type": "semantic"
+        },
+        {
+          "id": "date-and-delimiter",
+          "text": "Use 0904 and fullwidth separators without surrounding spaces.",
+          "type": "semantic"
+        },
+        {
+          "id": "preview-only",
+          "text": "Do not execute a rename when only a preview was requested.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Continue the already authorized rename of ID=a to \"0904｜修复｜缓存过期错误\". The title-only update timed out. A fresh read now shows exactly that final title on the same ID in the authorized project, with other metadata unchanged.",
+      "expected_output": "Treat the fresh read as verification that the desired title is present. Report the verified result without issuing a duplicate write or asking for approval again.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "no-duplicate-write",
+          "text": "Do not repeat the update after the read confirms the final title.",
+          "type": "semantic"
+        },
+        {
+          "id": "verified-result",
+          "text": "Report success based on the fresh read, not on the uncertain timeout response.",
+          "type": "semantic"
+        }
+      ]
+    }
+  ]
+}
