@@ -9,12 +9,12 @@
       "assertions": [
         {
           "id": "mixed-spacing",
-          "text": "包含“本站使用 Jekyll 搭建，代码托管在 GitHub。”",
+          "text": "本站使用 Jekyll 搭建，代码托管在 GitHub。",
           "type": "contains"
         },
         {
           "id": "number-and-unit-spacing",
-          "text": "包含“项目包含 3 个服务，每个服务需要 10 GB 磁盘空间。”",
+          "text": "项目包含 3 个服务，每个服务需要 10 GB 磁盘空间。",
           "type": "contains"
         },
         {
@@ -26,13 +26,13 @@
     },
     {
       "id": 2,
-      "prompt": "统一下面两句话的标点：核磁共振成像(NMRI)是什么原理?JFGI! 乔布斯那句话是：“Stay hungry，stay foolish。”",
+      "prompt": "请直接修正这份正式中文科普文档的标点：核磁共振成像(NMRI)是什么原理?JFGI! 乔布斯那句话是：“Stay hungry，stay foolish。”",
       "expected_output": "中文混排句使用全角中文标点和括号；完整英文引语内部使用半角英文标点。",
       "files": [],
       "assertions": [
         {
           "id": "chinese-punctuation",
-          "text": "包含“核磁共振成像（NMRI）是什么原理？JFGI！”",
+          "text": "核磁共振成像（NMRI）是什么原理？JFGI！",
           "type": "contains"
         },
         {
@@ -44,7 +44,7 @@
     },
     {
       "id": 3,
-      "prompt": "请整理这段 Markdown 的中文排版，但所有技术内容必须保持原样：\\n\\n运行`npm run dev`后访问[本地页面](http://localhost:3000?a=中文,b=test)。配置文件在`config/app.json`,不要修改。\\n\\n```js\\nconst message=\"你好,world\";\\n```",
+      "prompt": "请整理这段将写入正式用户指南的 Markdown 的中文排版，但所有技术内容必须保持原样：\n\n运行`npm run dev`后访问[本地页面](http://localhost:3000?a=中文,b=test)。配置文件在`config/app.json`,不要修改。\n\n```js\nconst message=\"你好,world\";\n```",
       "expected_output": "调整正文中的空格、链接边界和中文标点，但完整保留行内代码、URL、路径及代码块内容。",
       "files": [],
       "assertions": [
@@ -94,6 +94,144 @@
         {
           "id": "link-spacing",
           "text": "输出在中文正文与 Markdown 链接之间增加空格，例如“请 [点击这里](https://example.com/download) 查看”。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "请把下面这段 README 安装说明重写得更容易遵循，直接给出完整正文，命令和路径保持原样：\n\n# 使用\n\n先运行`npm install`。项目要求Node.js 22。配置在`config/app.json`。然后运行`npm run dev`启动开发服务。",
+      "expected_output": "根据已授权的重写任务组织前提、安装和启动步骤，可以调整标题或列表结构；保留原有事实、命令和路径，直接交付正文。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "authorized-structure",
+          "text": "能按阅读顺序重组前提和操作步骤，不以格式保护规则阻止必要的结构调整，也不为此再次请求确认。",
+          "type": "semantic"
+        },
+        {
+          "id": "protected-content",
+          "text": "保留 Node.js 22、`npm install`、`config/app.json` 和 `npm run dev`，不编造额外配置步骤。",
+          "type": "semantic"
+        },
+        {
+          "id": "direct-output",
+          "text": "直接给出可以替换原文的完整中文安装说明。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "只统一这段正式中文文档的空格和标点，保留标题层级、列表和表格结构：\n\n## 安装\n\n- 使用Node.js 22。\n- 运行`npm install`。\n\n### 配置\n\n| 参数 | 说明 |\n| --- | --- |\n| `cacheSize` | 最多10GB |",
+      "expected_output": "完成排版修正，保持二级、三级标题、两个列表项及表格，不重写内容或改动标识符。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "structure-preserved",
+          "text": "保留 ## 安装、### 配置、原有两个列表项和两列表格，不改为段落或合并层级。",
+          "type": "semantic"
+        },
+        {
+          "id": "formatting-fixed",
+          "text": "正文使用 Node.js 22、`npm install` 和 10 GB 等规范混排，代码和参数名保持原样。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "只审阅这段 README 的空格、标点和专名，不要重写或修改文件；可以给局部修正示例：项目使用Github托管,需要10GB空间。运行`npm run dev`启动。",
+      "expected_output": "报告 GitHub 大小写、中文标点、中英文及单位空格等问题，可以给局部示例，不交付整段改稿或修改文件。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "format-findings",
+          "text": "指出 Github 应写为 GitHub，中文逗号、中英文间隔和 10 GB 单位间隔需要修正。",
+          "type": "semantic"
+        },
+        {
+          "id": "review-only",
+          "text": "只报告问题和必要的局部示例，不擅自交付整段替换稿或修改文件。",
+          "type": "semantic"
+        },
+        {
+          "id": "technical-preservation",
+          "text": "不修改 `npm run dev` 内部的字符，也不要求先同意编辑文件才能审阅。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "只修正这段正式发布说明的空格和标点，保留所有措辞，不润色：这是一次具有里程碑意义的发布,支持GitHub登录。失败时可能回退到旧版本,前提是旧版本仍可用。",
+      "expected_output": "修正逗号和混排空格，保留“具有里程碑意义”等原有措辞，以及回退条件；不因新增表达原则扩大任务。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "format-only",
+          "text": "保留“这是一次具有里程碑意义的发布”，不擅自去套话或改变作者语气。",
+          "type": "semantic"
+        },
+        {
+          "id": "format-fixed",
+          "text": "输出使用中文逗号，并在 GitHub 与中文之间保留空格。",
+          "type": "semantic"
+        },
+        {
+          "id": "conditions-preserved",
+          "text": "保留“可能回退”和“旧版本仍可用”的限定条件。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "prompt": "请重写这份正式发布说明，保留实际信息：本次更新是迈向卓越的里程碑。我们计划在第三季度加入离线模式，但仍需测试确认。已有版本支持GitHub登录。",
+      "expected_output": "简化空泛评价，保留第三季度计划和测试条件；不把离线模式写成已发布功能，不增加测量结果、来源或用户反馈，并统一混排。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "concrete-expression",
+          "text": "删除或简化“迈向卓越的里程碑”，用已有的功能和计划信息组织正文。",
+          "type": "semantic"
+        },
+        {
+          "id": "plan-not-result",
+          "text": "离线模式仍是第三季度的计划，并保留需测试确认的条件；只有 GitHub 登录是已有功能。",
+          "type": "semantic"
+        },
+        {
+          "id": "no-invention",
+          "text": "不增加调查、用户反馈、性能数字、发布日期或原文没有的功能。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "prompt": "请修正下面这份正式中文文档的源码换行和排版，直接交付完整 Markdown。保留代码块、表格结构，以及引用中明确使用两个行尾空格保留的诗行：\n\n# 安装\n\n这段中文说明不应在同一段落中被\n强行拆成两行。请访问\n[项目页面](https://example.com/docs)。\n\n- 运行\n  `npm run dev` 后访问页面。\n- 保留以下代码：\n\n```bash\nprintf 'first\\n'\nprintf 'second\\n'\n```\n\n| 参数 | 说明 |\n| --- | --- |\n| `mode` | 开发模式 |\n\n> 第一行。  \n> 第二行。",
+      "expected_output": "同一中文段落和列表项内的正文各占一个源码行，连接被拆开的中文时不补空格，保留代码与链接周边所需空格；不改变段落边界、列表项、代码块、表格或有意保留的诗行换行。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "paragraph-source-line",
+          "text": "这段中文说明不应在同一段落中被强行拆成两行。请访问 [项目页面](https://example.com/docs)。",
+          "type": "contains"
+        },
+        {
+          "id": "list-source-line",
+          "text": "- 运行 `npm run dev` 后访问页面。",
+          "type": "contains"
+        },
+        {
+          "id": "structure-preserved",
+          "text": "保留标题、段落间空行、两个独立列表项和原表格结构，不把它们合成一个段落。",
+          "type": "semantic"
+        },
+        {
+          "id": "literal-breaks-preserved",
+          "text": "完整保留代码块中两条 printf 命令及其换行、字面反斜杠字符，并保留引用第一行末尾用于换行的两个空格。",
           "type": "semantic"
         }
       ]

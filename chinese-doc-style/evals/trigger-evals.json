@@ -61,7 +61,7 @@
   },
   {
     "query": "检查 README 的中英文空格和标点是否规范，只报告发现的问题，不要修改任何内容。",
-    "should_trigger": false
+    "should_trigger": true
   },
   {
     "query": "README 里写了 `npm run dev`，但我执行后端口 3000 被占用。帮我定位代码或环境问题。",
@@ -77,6 +77,22 @@
   },
   {
     "query": "Write an English README for this Swift package, including installation and usage examples.",
+    "should_trigger": false
+  },
+  {
+    "query": "请对正式中文用户指南做严格的发布前格式审阅，逐项检查混排、标点和专名，只给问题清单。",
+    "should_trigger": true
+  },
+  {
+    "query": "只检查这段中文是否有套话、夸张表述或机械句式，给建议，不要改写。",
+    "should_trigger": false
+  },
+  {
+    "query": "核查这篇中文文章中的日期、数字和引文是否真实，不评价表达风格。",
+    "should_trigger": false
+  },
+  {
+    "query": "审查这份中文架构文档的论证是否成立、需求是否完整，只讨论逻辑，不修改措辞和格式。",
     "should_trigger": false
   }
 ]
