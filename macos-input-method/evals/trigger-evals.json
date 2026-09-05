@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Create a minimal macOS input method using InputMethodKit.",
+    "should_trigger": true
+  },
+  {
+    "query": "Fix the IMKServer connection error in my input method.",
+    "should_trigger": true
+  },
+  {
+    "query": "我的 macOS 输入法需要用 IMKCandidates 显示候选词。",
+    "should_trigger": true
+  },
+  {
+    "query": "Remap Caps Lock to Escape on macOS.",
+    "should_trigger": false
+  },
+  {
+    "query": "Change the macOS shortcut for switching keyboard layouts.",
+    "should_trigger": false
+  },
+  {
+    "query": "Explain marked text handling in an iOS UITextView.",
+    "should_trigger": false
+  }
+]

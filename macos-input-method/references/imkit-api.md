@@ -44,7 +44,8 @@ NSLog("MyIME: IMKServer started")
 NSApplication.shared.run()
 ```
 
-Cannot coexist with `@main`. Top-level variables live for the process lifetime, which is what IMKServer needs.
+Cannot coexist with `@main`. Top-level variables live for the process
+lifetime, which is what IMKServer needs.
 
 ### Pattern B: NSApplication subclass + @main (complex lifecycle)
 
@@ -88,7 +89,8 @@ When using this pattern, add to Info.plist:
 
 ## Input Handling Approaches
 
-IMKInputController supports three mutually exclusive input handling approaches. Choose one:
+IMKInputController supports three mutually exclusive input handling
+approaches. Choose one:
 
 ### Approach 1: Text-level (recommended for simple input methods)
 
@@ -101,7 +103,7 @@ override func inputText(_ string: String!, client sender: Any!) -> Bool {
 }
 
 // Called for non-printable keys (arrows, delete, escape, etc.)
-override func didCommandBySelector(_ aSelector: Selector!, client sender: Any!) -> Bool {
+override func didCommand(by aSelector: Selector!, client sender: Any!) -> Bool {
     // aSelector: e.g., #selector(deleteBackward:), #selector(moveLeft:)
     return false
 }
@@ -140,13 +142,15 @@ override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
 }
 ```
 
-If both `inputText` and `handle` are implemented, `handle` takes precedence for key events.
+If both `inputText` and `handle` are implemented, `handle` takes precedence
+for key events.
 
 ---
 
 ## IMKTextInput Client Protocol
 
-The `sender` / `client` parameter conforms to `IMKTextInput`. Cast it to access text interaction methods:
+The `sender` / `client` parameter conforms to `IMKTextInput`. Cast it to
+access text interaction methods:
 
 ```swift
 guard let client = sender as? (any IMKTextInput) else { return false }
@@ -182,13 +186,18 @@ client.attributes(forCharacterIndex: 0, lineHeightRectangle: &lineHeightRect)
 
 ### NSRange Convention
 
-When a range is not applicable, use `NSRange(location: NSNotFound, length: NSNotFound)`. This tells the system to use the default behavior (e.g., insert at cursor, replace current marked text).
+When a range is not applicable, use
+`NSRange(location: NSNotFound, length: NSNotFound)`. This tells the system to
+use the default behavior (e.g., insert at cursor, replace current marked
+text).
 
 ---
 
 ## Composing Text (Marked Text)
 
-Chinese, Japanese, and other input methods show "work-in-progress" text before the user confirms a candidate. This is called marked text (or composing text) - it typically renders with an underline.
+Chinese, Japanese, and other input methods show "work-in-progress" text before
+the user confirms a candidate. This is called marked text (or composing
+text) - it typically renders with an underline.
 
 ### Workflow
 
@@ -263,7 +272,8 @@ let candidates = IMKCandidates(
 
 Panel types:
 - `kIMKSingleColumnScrollingCandidatePanel` - vertical scrolling list
-- `kIMKSingleRowSteppingCandidatePanel` - horizontal row, step through with arrows
+- `kIMKSingleRowSteppingCandidatePanel` - horizontal row, step through with
+  arrows
 - `kIMKScrollingGridCandidatePanel` - grid layout
 
 ### Providing Candidates
@@ -305,10 +315,14 @@ candidates.hide()
 
 ### Custom Candidate Window
 
-Many production input methods skip `IMKCandidates` and implement their own window using `NSPanel` because of known bugs (see Known Issues). The general approach:
+Many production input methods skip `IMKCandidates` and implement their own
+window using `NSPanel` because of known bugs (see Known Issues). The general
+approach:
 
-1. Create an `NSPanel` with `level = .popUpMenu` and `styleMask = [.borderless, .nonactivatingPanel]`
-2. Position it near the cursor using `client.attributes(forCharacterIndex:lineHeightRectangle:)`
+1. Create an `NSPanel` with `level = .popUpMenu` and
+   `styleMask = [.borderless, .nonactivatingPanel]`
+2. Position it near the cursor using
+   `client.attributes(forCharacterIndex:lineHeightRectangle:)`
 3. Populate with your own UI (SwiftUI or AppKit)
 4. Handle arrow key / number key selection in your `InputController`
 
@@ -316,7 +330,9 @@ Many production input methods skip `IMKCandidates` and implement their own windo
 
 ## Menus And Preferences
 
-InputMethodKit does not provide a full preferences UI framework. It provides entry points that let the input method expose commands, define input modes, and open its own settings UI.
+InputMethodKit does not provide a full preferences UI framework. It provides
+entry points that let the input method expose commands, define input modes,
+and open its own settings UI.
 
 ### Relevant APIs
 
@@ -356,16 +372,21 @@ In short:
 2. Add a `Preferences...` item to that menu
 3. Route the command through `doCommand(by:command:)` or an action method
 4. Open a normal AppKit preferences window from `showPreferences(_:)`
-5. Return the mode dictionary from `modes(_:)` when the input method has multiple formal modes
+5. Return the mode dictionary from `modes(_:)` when the input method has
+   multiple formal modes
 6. Store settings in `UserDefaults` or a shared defaults suite
 
 ### Design Notes
 
-- The settings window is typically a normal `NSWindowController` plus `NSViewController`
+- The settings window is typically a normal `NSWindowController` plus
+  `NSViewController`
 - `showPreferences(_:)` is only the entry point, not the UI implementation
-- If the project uses a separate settings app, the input method menu can launch that app instead of hosting the full UI itself
-- `modes(_:)` is for system-facing mode definitions, not for every internal state flag
-- In practice, mode definitions usually correspond to `ComponentInputModeDict` in `Info.plist`
+- If the project uses a separate settings app, the input method menu can
+  launch that app instead of hosting the full UI itself
+- `modes(_:)` is for system-facing mode definitions, not for every internal
+  state flag
+- In practice, mode definitions usually correspond to `ComponentInputModeDict`
+  in `Info.plist`
 
 ---
 
@@ -403,7 +424,9 @@ override func modes(_ sender: Any!) -> [AnyHashable : Any]! {
 
 ### What `modes(_:)` Represents
 
-`modes(_:)` returns the input method mode dictionary. The public documentation is sparse, but older InputMethodKit references and bundle metadata indicate that this dictionary describes:
+`modes(_:)` returns the input method mode dictionary. The public documentation
+is sparse, but older InputMethodKit references and bundle metadata indicate
+that this dictionary describes:
 
 - which input modes exist
 - which modes are visible
@@ -429,7 +452,8 @@ Typical per-mode properties may include:
 - default state
 - key equivalent
 
-If the input method only has one mode, this can stay minimal. If the input method has several durable modes, the mode IDs and their ordering matter.
+If the input method only has one mode, this can stay minimal. If the input
+method has several durable modes, the mode IDs and their ordering matter.
 
 ---
 
@@ -459,27 +483,44 @@ if let sources = TISCreateInputSourceList(conditions, true)?
 }
 ```
 
-This uses the Carbon `Text Input Source Services` API. Import `Carbon` to access these functions.
+This uses the Carbon `Text Input Source Services` API. Import `Carbon` to
+access these functions.
 
 ---
 
 ## Known Issues
 
-- **IMKCandidates window level**: On macOS 10.14+, the built-in candidate window gets obscured by NSMenu, Spotlight, and other system UI. Workaround: use `setWindowLevel:` (private API) or implement a custom candidate window.
+- **IMKCandidates window level**: On macOS 10.14+, the built-in candidate
+  window gets obscured by NSMenu, Spotlight, and other system UI. Workaround:
+  use `setWindowLevel:` (private API) or implement a custom candidate window.
 
-- **Sandbox incompatibility**: `IMKServer` requires registering a global Mach service, which App Sandbox blocks. Either disable sandbox or add a `com.apple.security.temporary-exception.mach-register.global-name` entitlement.
+- **Sandbox incompatibility**: `IMKServer` requires registering a global Mach
+  service, which App Sandbox blocks. Either disable sandbox or add a
+  `com.apple.security.temporary-exception.mach-register.global-name`
+  entitlement.
 
-- **No App Store distribution**: Apple does not allow InputMethodKit apps on the Mac App Store.
+- **No App Store distribution**: Apple does not allow InputMethodKit apps on
+  the Mac App Store.
 
-- **Xcode debugging limitations**: Input methods must be installed to `~/Library/Input Methods/` and launched by the system. You cannot run them directly from Xcode. Use `NSLog` + Console.app for debugging.
+- **Xcode debugging limitations**: Input methods must be installed to
+  `~/Library/Input Methods/` and launched by the system. You cannot run them
+  directly from Xcode. Use `NSLog` + Console.app for debugging.
 
-- **First-install discovery**: macOS discovers new input sources at login time. The very first install requires a logout/login cycle. Subsequent updates only need a process restart.
+- **First-install discovery**: macOS discovers new input sources at login
+  time. The very first install requires a logout/login cycle. Subsequent
+  updates only need a process restart.
 
-- **`print()` does not work**: stdout is not connected for background processes launched by `imklaunchagent`. Always use `NSLog()`.
+- **`print()` does not work**: stdout is not connected for background
+  processes launched by `imklaunchagent`. Always use `NSLog()`.
 
 ---
 
 ## Official References
+
+- `IMKServerInput` event-handling approaches and Swift method names:
+  https://developer.apple.com/documentation/inputmethodkit/imkserverinput
+- `didCommand(by:client:)` for commands generated during text input:
+  https://developer.apple.com/documentation/objectivec/nsobject-swift.class/didcommand(by:client:)
 
 - InputMethodKit framework:
   https://developer.apple.com/documentation/inputmethodkit
@@ -508,7 +549,11 @@ This uses the Carbon `Text Input Source Services` API. Import `Carbon` to access
 
 ## Reference Projects
 
-- [ensan-hcl/macOS_IMKitSample_2021](https://github.com/ensan-hcl/macOS_IMKitSample_2021) - Swift, modern, most complete example
-- [pkamb/NumberInput_IMKit_Sample](https://github.com/pkamb/NumberInput_IMKit_Sample) - Apple's official sample (Objective-C)
-- [pkamb/InputMethodKitBoilerplate](https://github.com/pkamb/InputMethodKitBoilerplate) - Minimal Objective-C boilerplate
-- [google/mozc](https://github.com/google/mozc) - Production input method (Google Japanese Input)
+- [ensan-hcl/macOS_IMKitSample_2021](https://github.com/ensan-hcl/macOS_IMKitSample_2021) -
+  Swift, modern, most complete example
+- [pkamb/NumberInput_IMKit_Sample](https://github.com/pkamb/NumberInput_IMKit_Sample) -
+  Apple's official sample (Objective-C)
+- [pkamb/InputMethodKitBoilerplate](https://github.com/pkamb/InputMethodKitBoilerplate) -
+  Minimal Objective-C boilerplate
+- [google/mozc](https://github.com/google/mozc) - Production input method
+  (Google Japanese Input)

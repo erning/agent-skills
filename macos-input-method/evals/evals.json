@@ -9,7 +9,7 @@
       "assertions": [
         {
           "id": "xcodegen-project",
-          "text": "Creates or describes a project.yml for a macOS application target",
+          "text": "Creates the requested minimal XcodeGen application files instead of only describing a project.",
           "type": "semantic"
         },
         {
@@ -35,6 +35,11 @@
         {
           "id": "install-instructions",
           "text": "Explains installing the built .app into ~/Library/Input Methods/ and logging out/in on first install",
+          "type": "semantic"
+        },
+        {
+          "id": "no-missing-icon",
+          "text": "Omits the icon key when no actual icon asset is supplied, or creates a real matching asset.",
           "type": "semantic"
         }
       ]
@@ -129,6 +134,29 @@
         {
           "id": "candidate-options",
           "text": "Mentions IMKCandidates or a custom NSPanel for candidate UI",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "This existing InputMethodKit app uses a checked-in Xcode project and an AppDelegate. Add marked text handling to its current controller. Keep our build setup and do not install or select an input source.",
+      "expected_output": "Use the composition API reference and existing controller, preserving the Xcode project and lifecycle. Do not scaffold XcodeGen or run installation steps.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "existing-conventions",
+          "text": "Keeps the existing Xcode project, layout, and entry point; does not create project.yml or replace the AppDelegate.",
+          "type": "semantic"
+        },
+        {
+          "id": "focused-guidance",
+          "text": "Uses composition-related guidance without loading unrelated setup and installation references by default.",
+          "type": "semantic"
+        },
+        {
+          "id": "bounded-side-effects",
+          "text": "Does not install an input source, switch the active keyboard, or log the user out.",
           "type": "semantic"
         }
       ]
