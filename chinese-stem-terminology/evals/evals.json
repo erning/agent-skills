@@ -44,18 +44,23 @@
     },
     {
       "id": 3,
-      "prompt": "审校这段数据库说明中的术语，但不要修改代码、标识符或英文检索键：The normalisation step 把 user_record 拆成多个 relation。运行 `normalise(user_record)` 后，每个 record 都有 primary key。",
-      "expected_output": "把中文对应项规范为数据库语境中的“规范化”“关系”“记录”和“主键”，同时原样保留英文、行内代码和标识符。",
+      "prompt": "请只修正这段数据库说明中的中文术语，直接给出修改后的文本，不翻译或改写已有英文，不修改代码或标识符：数据库的规格化（normalisation）用于减少冗余。`normalise(user_record)` 将数据拆分到多个关联（relation）中，每条纪录（record）由主要键（primary key）标识。",
+      "expected_output": "将已有的中文对应项改为数据库语境中的“规范化”“关系”“记录”和“主键”，保留括号内英文、行内代码和标识符，不添加无关译注。",
       "files": [],
       "assertions": [
         {
           "id": "database-terms",
-          "text": "数据库语境使用“规范化”“关系”“记录”和“主键”。",
+          "text": "将“规格化”“关联”“纪录”和“主要键”分别改为“规范化”“关系”“记录”和“主键”。",
           "type": "semantic"
         },
         {
           "id": "protected-content",
-          "text": "原样保留 The normalisation step、user_record、relation、`normalise(user_record)`、record 和 primary key。",
+          "text": "原样保留 normalisation、`normalise(user_record)`、relation、record 和 primary key。",
+          "type": "semantic"
+        },
+        {
+          "id": "no-added-glosses",
+          "text": "只修正已有中文对应项，不改写英文、不增加额外翻译段落。",
           "type": "semantic"
         }
       ]
@@ -74,6 +79,42 @@
         {
           "id": "contextual-alternative",
           "text": "指出量子物理语境常用“本征值”，并建议依据目标资料或项目约定选择。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "本项目术语表明确约定数学和物理章节都把 vector 写作“向量”。请审校并直接修改这段项目教材，遵循该约定：数学向量具有大小和方向。物理章节用速度矢量描述位移的变化率。",
+      "expected_output": "遵循项目明确约定，将物理章节的“速度矢量”统一为“速度向量”，保持事实含义，不将附带词表当作更高优先级的标准。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "project-priority",
+          "text": "物理章节采用项目指定的“速度向量”，不坚持必须使用“速度矢量”。",
+          "type": "semantic"
+        },
+        {
+          "id": "no-false-authority",
+          "text": "不把项目约定宣称为其他项目也必须遵循的唯一标准。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "请直接改写下面的正式中文数据库指南，统一中国大陆术语和中文排版，命令、标识符和链接目标保持原样：这个软体在资料库中存放纪录,最多使用10GB空间。执行`normalise(user_record)`完成数据库正规化(normalisation)。详见[说明](https://example.com/db?a=1,b=2)。",
+      "expected_output": "在同一交付文本中完成中文术语规范和排版；保留命令、标识符、英文检索键及 URL，不因格式修改重新引入不一致术语。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "terminology-and-format",
+          "text": "使用“软件”“数据库”“记录”和数据库“规范化”，同时修正中文标点、中英文空格和 10 GB 单位格式。",
+          "type": "semantic"
+        },
+        {
+          "id": "technical-content-preserved",
+          "text": "原样保留 `normalise(user_record)`、normalisation 和 https://example.com/db?a=1,b=2。",
           "type": "semantic"
         }
       ]

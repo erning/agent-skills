@@ -1,0 +1,50 @@
+[
+  {
+    "query": "把这份 A Level 物理笔记翻译成简体中文，使用中国大陆常见术语。",
+    "should_trigger": true
+  },
+  {
+    "query": "审校这段数据库说明中的“正规化”和“主要键”，只给出术语建议，不修改原文。",
+    "should_trigger": true
+  },
+  {
+    "query": "请按项目术语表直接修订计算机教材中的中文译名，保留代码和公式。",
+    "should_trigger": true
+  },
+  {
+    "query": "把这篇技术指南中的“软体、物件、资料库”改成中国大陆常用词。",
+    "should_trigger": true
+  },
+  {
+    "query": "重写这份中文数学讲义，使用中国大陆教材中常见的复数和向量术语。",
+    "should_trigger": true
+  },
+  {
+    "query": "请审校正式中文数据库文档的专业术语，同时统一中文排版并直接更新文件。",
+    "should_trigger": true
+  },
+  {
+    "query": "今天学物理有点累，陪我随便聊两句。",
+    "should_trigger": false
+  },
+  {
+    "query": "只修正文档的标点和中英文空格，术语和正文内容一律不改。",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把这封旅游邀请信改得自然一些，不涉及专业内容。",
+    "should_trigger": false
+  },
+  {
+    "query": "Summarize this database paper in English; do not translate it.",
+    "should_trigger": false
+  },
+  {
+    "query": "解释一下这段 Python 为什么报错，直接在聊天里回答，不写文档。",
+    "should_trigger": false
+  },
+  {
+    "query": "阅读中文物理讲义，列出它包含的章节标题，不校对或改写。",
+    "should_trigger": false
+  }
+]
