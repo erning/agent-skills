@@ -1,0 +1,26 @@
+[
+  {
+    "query": "Use git-crypt to encrypt config/secrets.yml in this Git repository.",
+    "should_trigger": true
+  },
+  {
+    "query": "请让这个公开 Git 仓库中的少量配置文件以密文保存，并在本地透明解密。",
+    "should_trigger": true
+  },
+  {
+    "query": "git-crypt unlock fails for my GPG key. Diagnose the access grant.",
+    "should_trigger": true
+  },
+  {
+    "query": "我把 API token 发到了公开聊天里，应该怎么撤销？",
+    "should_trigger": false
+  },
+  {
+    "query": "Explain how GitHub Actions stores repository secrets. Do not change repository encryption.",
+    "should_trigger": false
+  },
+  {
+    "query": "Change .gitattributes so Markdown uses LF line endings.",
+    "should_trigger": false
+  }
+]

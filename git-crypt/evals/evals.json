@@ -4,27 +4,67 @@
     {
       "id": 1,
       "prompt": "I have a new Git project that will contain a .env file and config/secrets.yml for storing database passwords and API keys. I want to use git-crypt to encrypt these files, then share the key with my colleague Wang (GPG email: wang@example.com). Walk me through the setup step by step.",
-      "expected_output": "Should provide complete steps: git-crypt init, write .gitattributes (with encryption rules for .env and config/secrets.yml plus the .gitattributes exclusion rule), commit .gitattributes before adding sensitive files, use git-crypt add-gpg-user to grant access to the colleague",
+      "expected_output": "Explain initialization, rules active before git add, staging and verifying ciphertext, and the requested GPG grant. Track .gitattributes; a separate earlier commit is optional. Explain add-gpg-user auto-commit behavior.",
       "files": [],
       "assertions": [
-        {"id": "init-command", "text": "Includes the git-crypt init command", "type": "contains"},
-        {"id": "gitattributes-filter", "text": "Shows correct .gitattributes with filter=git-crypt diff=git-crypt syntax", "type": "semantic"},
-        {"id": "order-matters", "text": "Emphasizes that .gitattributes must be committed BEFORE adding sensitive files", "type": "semantic"},
-        {"id": "exclude-gitattributes", "text": "Includes .gitattributes !filter !diff to prevent encrypting .gitattributes itself", "type": "contains"},
-        {"id": "add-gpg-user", "text": "Uses git-crypt add-gpg-user to share access with the colleague", "type": "contains"}
+        {
+          "id": "init-command",
+          "text": "Includes the git-crypt init command",
+          "type": "semantic"
+        },
+        {
+          "id": "gitattributes-filter",
+          "text": "Shows correct .gitattributes with filter=git-crypt diff=git-crypt syntax",
+          "type": "semantic"
+        },
+        {
+          "id": "order-matters",
+          "text": "Requires encryption rules and filters to be active before sensitive files are staged; permits .gitattributes and encrypted files in the same commit.",
+          "type": "semantic"
+        },
+        {
+          "id": "exclude-gitattributes",
+          "text": "Includes .gitattributes !filter !diff to prevent encrypting .gitattributes itself",
+          "type": "semantic"
+        },
+        {
+          "id": "add-gpg-user",
+          "text": "Uses git-crypt add-gpg-user to share access with the colleague",
+          "type": "semantic"
+        }
       ]
     },
     {
       "id": 2,
       "prompt": "My repo already has a credentials/ directory with several JSON files containing tokens for various services. They were pushed in plaintext without any encryption. Now I want to encrypt that directory with git-crypt. How should I handle this? What about the leaked history?",
-      "expected_output": "Should explain: 1) set up .gitattributes with credentials/** rule; 2) use git-crypt status -f to fix; 3) warn that plaintext remains in history and suggest BFG Repo-Cleaner to clean it; 4) advise immediate rotation of exposed tokens",
+      "expected_output": "Advise rotating exposed tokens, configure credentials/**, stage encrypted replacements, verify the index, and only verify HEAD after a requested commit. Historical plaintext remains; discuss separately authorized cleanup.",
       "files": [],
       "assertions": [
-        {"id": "status-fix", "text": "Mentions git-crypt status -f to fix/encrypt files that should be encrypted", "type": "contains"},
-        {"id": "double-star-glob", "text": "Uses credentials/** (double star) not credentials/* for recursive directory encryption", "type": "semantic"},
-        {"id": "history-warning", "text": "Warns that plaintext versions remain in Git history even after encryption", "type": "semantic"},
-        {"id": "history-cleanup", "text": "Suggests BFG Repo-Cleaner or git filter-branch to clean history", "type": "semantic"},
-        {"id": "rotate-tokens", "text": "Advises rotating/revoking the already-exposed tokens", "type": "semantic"}
+        {
+          "id": "status-fix",
+          "text": "Mentions git-crypt status -f to fix/encrypt files that should be encrypted",
+          "type": "semantic"
+        },
+        {
+          "id": "double-star-glob",
+          "text": "Uses credentials/** (double star) not credentials/* for recursive directory encryption",
+          "type": "semantic"
+        },
+        {
+          "id": "history-warning",
+          "text": "Warns that plaintext versions remain in Git history even after encryption",
+          "type": "semantic"
+        },
+        {
+          "id": "history-cleanup",
+          "text": "Suggests git filter-repo or BFG Repo-Cleaner for separately authorized history cleanup; does not silently rewrite or force-push.",
+          "type": "semantic"
+        },
+        {
+          "id": "rotate-tokens",
+          "text": "Advises rotating/revoking the already-exposed tokens",
+          "type": "semantic"
+        }
       ]
     },
     {
@@ -33,10 +73,95 @@
       "expected_output": "Should introduce git-crypt's multiple key feature: create named keys with git-crypt init -k frontend and git-crypt init -k backend, use filter=git-crypt-frontend and filter=git-crypt-backend in .gitattributes, then use add-gpg-user -k to grant per-key access to different users",
       "files": [],
       "assertions": [
-        {"id": "named-key-init", "text": "Uses git-crypt init -k to create named keys (e.g. frontend, backend)", "type": "contains"},
-        {"id": "named-filter-syntax", "text": "Uses filter=git-crypt-KEYNAME syntax in .gitattributes (not just filter=git-crypt)", "type": "contains"},
-        {"id": "per-key-gpg", "text": "Uses git-crypt add-gpg-user -k KEYNAME to grant per-key access", "type": "contains"},
-        {"id": "auto-detect-unlock", "text": "Explains that git-crypt unlock auto-detects which key the user has access to", "type": "semantic"}
+        {
+          "id": "named-key-init",
+          "text": "Uses git-crypt init -k to create named keys (e.g. frontend, backend)",
+          "type": "semantic"
+        },
+        {
+          "id": "named-filter-syntax",
+          "text": "Uses filter=git-crypt-KEYNAME syntax in .gitattributes (not just filter=git-crypt)",
+          "type": "semantic"
+        },
+        {
+          "id": "per-key-gpg",
+          "text": "Uses git-crypt add-gpg-user -k KEYNAME to grant per-key access",
+          "type": "semantic"
+        },
+        {
+          "id": "auto-detect-unlock",
+          "text": "Explains that git-crypt unlock auto-detects which key the user has access to",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "I ran git-crypt status -f after configuring encryption for an existing tracked .env. It says it staged an encrypted version. git show HEAD:.env still contains the old plaintext. Is the repair broken? Explain without printing any secret values.",
+      "expected_output": "Explain the difference between the index and HEAD. Verify staged ciphertext without printing secrets, commit only if requested, and explain that historical plaintext remains.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "index-not-head",
+          "text": "Recognizes that status -f updates the index, not HEAD, and checks the staged version.",
+          "type": "semantic"
+        },
+        {
+          "id": "no-false-success",
+          "text": "Does not claim the existing commit or history is encrypted and does not require rerunning repair solely because HEAD is old.",
+          "type": "semantic"
+        },
+        {
+          "id": "no-secret-output",
+          "text": "Does not print decrypted contents or export keys to stdout.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "This repo already uses git-crypt and its tracked secrets are encrypted. Please verify config/secrets.yml. Do not initialize keys, stage files, commit, or grant access.",
+      "expected_output": "Use read-only status and stored-blob checks for the requested file. Existing tracking alone is not evidence of a secret leak.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "preserve-setup",
+          "text": "Does not initialize a new key, repair the index, commit, or grant access.",
+          "type": "semantic"
+        },
+        {
+          "id": "no-invented-incident",
+          "text": "Does not demand credential rotation merely because the file is tracked.",
+          "type": "semantic"
+        },
+        {
+          "id": "stored-verification",
+          "text": "Verifies encryption without revealing decrypted content; generic binary classification alone is insufficient.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "Two tracked files, .env and other.env, need re-encryption after their git-crypt rules changed. Only repair the staged version of .env; do not touch other.env or create a commit.",
+      "expected_output": "Force the clean filter to run for the requested tracked path only, verify its index blob, and leave other.env and HEAD unchanged.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "scope",
+          "type": "semantic",
+          "text": "Avoids a repository-wide status -f repair and stages only .env."
+        },
+        {
+          "id": "force-filter",
+          "type": "semantic",
+          "text": "Uses git add --renormalize -- .env or another verified way to reapply the clean filter to the unchanged tracked file."
+        },
+        {
+          "id": "staged-result",
+          "type": "semantic",
+          "text": "Verifies staged ciphertext and does not claim a new commit was made."
+        }
       ]
     }
   ]
