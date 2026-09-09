@@ -1,0 +1,70 @@
+[
+  {
+    "query": "用 $erning-obsidian-capture 把这次讨论保存下来。",
+    "should_trigger": true
+  },
+  {
+    "query": "把上面的总结记到我的 Obsidian Notes。",
+    "should_trigger": true
+  },
+  {
+    "query": "把这次排查过程写进 erning/Obsidian-Notes 的 Daily 目录。",
+    "should_trigger": true
+  },
+  {
+    "query": "此前我已说明本次对话的记录都写到我的 Obsidian Notes。现在把这个结论也记一下。",
+    "should_trigger": true
+  },
+  {
+    "query": "帮我更新我的 Obsidian Notes 里昨天的缓存排查笔记，补上刚才验证通过的结果。",
+    "should_trigger": true
+  },
+  {
+    "query": "准备把这次讨论记到我的 Obsidian，先给我看草稿，暂时不要写文件。",
+    "should_trigger": true
+  },
+  {
+    "query": "Save this summary to my personal erning/Obsidian-Notes vault.",
+    "should_trigger": true
+  },
+  {
+    "query": "总结一下我们刚才讨论的方案。",
+    "should_trigger": false
+  },
+  {
+    "query": "此前本次对话已确定记录都写到我的 Obsidian Notes。现在只总结一下刚才的方案，直接在这里回答。",
+    "should_trigger": false
+  },
+  {
+    "query": "记录一下这个排查过程。",
+    "should_trigger": false
+  },
+  {
+    "query": "把结论整理成 Markdown。",
+    "should_trigger": false
+  },
+  {
+    "query": "把这个排查结果记录到当前项目的 README。",
+    "should_trigger": false
+  },
+  {
+    "query": "把这项修复记到 CHANGELOG.md。",
+    "should_trigger": false
+  },
+  {
+    "query": "将总结保存到公司的 Obsidian 团队知识库。",
+    "should_trigger": false
+  },
+  {
+    "query": "前面一直记在我的 Obsidian Notes；这次改为记录到当前项目的 docs/decision.md。",
+    "should_trigger": false
+  },
+  {
+    "query": "Obsidian 的双向链接怎么用？",
+    "should_trigger": false
+  },
+  {
+    "query": "实现 erning-obsidian-capture 这个 skill，采用我们刚确定的设计。",
+    "should_trigger": false
+  }
+]
