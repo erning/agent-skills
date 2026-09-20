@@ -94,5 +94,45 @@
   {
     "query": "审查这份中文架构文档的论证是否成立、需求是否完整，只讨论逻辑，不修改措辞和格式。",
     "should_trigger": false
+  },
+  {
+    "query": "在聊天里直接起草一份供团队评审的正式中文 API 设计说明，不用创建文件。",
+    "should_trigger": true
+  },
+  {
+    "query": "解释一下 API 和 SDK 的区别，用 Markdown 表格回答就好。",
+    "should_trigger": false
+  },
+  {
+    "query": "帮我把这段英文架构说明临时翻成中文，让我看懂即可，不作为正式文档。",
+    "should_trigger": false
+  },
+  {
+    "query": "把我们刚聊的排查思路写进 scratch.md，作为我的随手记录，不必严格排版。",
+    "should_trigger": false
+  },
+  {
+    "query": "README 的文案可以晚点再改，先在聊天里说说这个安装流程哪里让人困惑。",
+    "should_trigger": false
+  },
+  {
+    "query": "前面的正式报告已经完成。现在随便聊聊，你觉得这个方案难实现吗？",
+    "should_trigger": false
+  },
+  {
+    "query": "这句话里的逗号用得对吗：今天下雨了，我没带伞。简单说一下。",
+    "should_trigger": false
+  },
+  {
+    "query": "用中文解释一下这段代码，把输入和输出列成表格。",
+    "should_trigger": false
+  },
+  {
+    "query": "这是一条群聊消息，但请明确使用 $chinese-doc-style 检查格式：今晚8点发布v2.0。",
+    "should_trigger": true
+  },
+  {
+    "query": "chinese-doc-style 是不是只该用于正式文档？先聊聊触发范围，不用改文件。",
+    "should_trigger": false
   }
 ]

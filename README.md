@@ -8,8 +8,8 @@
 
 | 技能 | 适用场景 |
 | --- | --- |
-| [`chinese-doc-style`](chinese-doc-style/SKILL.md) | 创建、修改正式中文文档或专项审阅混排、标点、专名和格式；新建与改写兼顾基本表达，只读格式审阅只给建议 |
-| [`chinese-stem-terminology`](chinese-stem-terminology/SKILL.md) | 写作、翻译或审校数学、物理、计算机、化学等内容时，规范中国大陆常用中文术语 |
+| [`chinese-doc-style`](chinese-doc-style/SKILL.md) | 撰写、修改正式中文文档或专项审阅其格式，规范混排、标点和专名；日常聊天和非正式记录不自动调用 |
+| [`chinese-stem-terminology`](chinese-stem-terminology/SKILL.md) | 撰写、翻译、修改或审校正式 STEM 文档，规范中国大陆中文术语；技术问答、临时翻译和非正式笔记不自动调用 |
 | [`conversation-namer`](conversation-namer/SKILL.md) | 按 `MMDD｜类型｜主题` 规范会话标题，默认使用中文，以原始创建时间换算上海时区日期；默认预览确认，复用已有明确授权 |
 | [`erning-obsidian-capture`](erning-obsidian-capture/SKILL.md) | 将交流、总结或指定内容保存到 Erning 的个人 Obsidian Notes；要求明确指定该库或沿用本次对话已确定的记录目标，默认写入 `Daily/YYYY-MM-DD/`，仅保存本地文件 |
 | [`git-crypt`](git-crypt/SKILL.md) | 使用 git-crypt 配置文件加密、管理访问权限和排障；按需处理已有明文并区分暂存与提交验证 |
@@ -23,6 +23,8 @@
 `erning-obsidian-capture` 包含 Erning 的个人仓库和本地路径约定，专用于 `erning/Obsidian-Notes`。明确说“记到我的 Obsidian”即可指定目标；本次对话确定目标后可简称“记一下”。它默认只保存本地 Markdown 文件，提交和推送按明确请求或已有授权执行。
 
 `humanizer-zh` 与 `chinese-doc-style` 可独立使用。前者处理表达问题，后者处理正式文档的书写规范；两者的专项审阅均可只报告问题，是否改稿由用户请求决定。仅阅读、总结或比较内容不会因此加载它们。正式文档需要专门润色时，先处理表达，再检查术语和格式；仅排版时保留原有表达。
+
+`chinese-doc-style` 和 `chinese-stem-terminology` 仅在处理正式文档时自动调用。聊天中起草供发布、交付或评审的文档仍适用；普通聊天、概念解释、代码讨论、临时翻译和随手记录不自动调用，即使包含技术名词、表格或 Markdown。没有正式文档用途，或用户说明不必严格规范时，按普通交流处理；文档规范不延续到过程说明和后续闲聊。用户明确要求使用某个 skill 时，按其指定范围处理。
 
 ## 使用 npx skills 安装
 
@@ -71,7 +73,7 @@ npx skills add erning/agent-skills \
 ```text
 请使用 chinese-doc-style，直接修改 README.md 的中文安装说明，统一格式并保留命令。
 
-请使用 chinese-stem-terminology，审校 notes.md 的物理术语，使用中国大陆常用译名。
+请使用 chinese-stem-terminology，审校即将发给学生的正式物理讲义 physics-handout.md，使用中国大陆常用译名。
 
 请使用 git-commit-writer，为当前改动起草提交信息。
 

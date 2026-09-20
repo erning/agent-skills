@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "请把这段 A Level 笔记翻译成简体中文，并使用中国大陆常见的数学和物理术语：数学：A vector has both magnitude and direction. 物理：The velocity vector describes the rate of change of displacement.",
+      "prompt": "请把这段即将发给学生的正式 A Level 讲义翻译成简体中文，并使用中国大陆常见的数学和物理术语：数学：A vector has both magnitude and direction. 物理：The velocity vector describes the rate of change of displacement.",
       "expected_output": "翻译准确，并根据学科语境区分数学中的“向量”和物理中的“矢量”；不把不同学科的用词机械统一。",
       "files": [],
       "assertions": [
@@ -26,7 +26,7 @@
     },
     {
       "id": 2,
-      "prompt": "把下面的计算机笔记改成中国大陆常用术语，并直接给出修改后的文本：这个软体采用物件导向程式设计。作业系统的程序由核心负责排程，资料存放在硬碟中。",
+      "prompt": "把下面这段正式计算机教材改成中国大陆常用术语，并直接给出修改后的文本：这个软体采用物件导向程式设计。作业系统的程序由核心负责排程，资料存放在硬碟中。",
       "expected_output": "将港台地区用词改为中国大陆计算机专业用词，同时根据操作系统语境正确处理 process 和 kernel 等概念。",
       "files": [],
       "assertions": [
@@ -44,7 +44,7 @@
     },
     {
       "id": 3,
-      "prompt": "请只修正这段数据库说明中的中文术语，直接给出修改后的文本，不翻译或改写已有英文，不修改代码或标识符：数据库的规格化（normalisation）用于减少冗余。`normalise(user_record)` 将数据拆分到多个关联（relation）中，每条纪录（record）由主要键（primary key）标识。",
+      "prompt": "请只修正这段准备交付客户的正式数据库指南中的中文术语，直接给出修改后的文本，不翻译或改写已有英文，不修改代码或标识符：数据库的规格化（normalisation）用于减少冗余。`normalise(user_record)` 将数据拆分到多个关联（relation）中，每条纪录（record）由主要键（primary key）标识。",
       "expected_output": "将已有的中文对应项改为数据库语境中的“规范化”“关系”“记录”和“主键”，保留括号内英文、行内代码和标识符，不添加无关译注。",
       "files": [],
       "assertions": [
@@ -67,7 +67,7 @@
     },
     {
       "id": 4,
-      "prompt": "请检查这句话里的专业译名是否规范：量子系统的 eigenvalue 一律只能翻译成“特征值”，这是中国唯一官方标准。只给出有依据的修改建议。",
+      "prompt": "请审校正式物理教材中这句话的专业译名是否规范：量子系统的 eigenvalue 一律只能翻译成“特征值”，这是中国唯一官方标准。只给出有依据的修改建议。",
       "expected_output": "不无依据地认可“唯一官方标准”的说法；指出量子物理中“本征值”也是中国大陆常见术语，并建议根据教材、项目术语表或指定标准确定。",
       "files": [],
       "assertions": [
@@ -116,6 +116,42 @@
           "id": "technical-content-preserved",
           "text": "原样保留 `normalise(user_record)`、normalisation 和 https://example.com/db?a=1,b=2。",
           "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "正式物理讲义已经定稿了。现在只是聊天：vector 为什么有时叫向量，有时叫矢量？简单解释就行，不用严格审校术语。",
+      "expected_output": "简短解释数学和物理中的常见称呼差异，不沿用前一任务的正式文档审校流程，不读取 skill 词表或给出术语整改清单。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "answer-without-review",
+          "type": "semantic",
+          "text": "直接解释学科用语差异，不把聊天改成正式讲义或要求统一用户的用词。"
+        },
+        {
+          "id": "no-terminology-workflow",
+          "type": "semantic",
+          "text": "不读取 skill 词表、不追加术语检查报告，也不追问文档用途。"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "临时帮我翻译这句物理题，看懂就行，不写正式文档：The velocity vector is perpendicular to the magnetic field.",
+      "expected_output": "直接给出正确易懂的中文译文，不因翻译 STEM 内容而加载词表或执行正式术语审校；可自然使用常见专业术语。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "meaning-preserved",
+          "type": "semantic",
+          "text": "正确表达速度方向与磁场方向垂直，直接满足临时理解题意的需求。"
+        },
+        {
+          "id": "no-unnecessary-loading",
+          "type": "semantic",
+          "text": "不读取 skill 词表、不生成译名对照或规范报告，也不要求先明确正式文档用途。"
         }
       ]
     }

@@ -3,7 +3,7 @@
   "evals": [
     {
       "id": 1,
-      "prompt": "请按中文文档格式规范直接修改这段话，不要改变意思：本站使用Jekyll搭建,代码托管在Github。项目包含3个服务,每个服务需要10GB磁盘空间。",
+      "prompt": "请按中文文档格式规范直接修改这段正式项目说明，不要改变意思：本站使用Jekyll搭建,代码托管在Github。项目包含3个服务,每个服务需要10GB磁盘空间。",
       "expected_output": "直接给出规范化文本：修正中英文及中文数字间空格、数字与单位间空格、中文标点和 GitHub 官方大小写，同时保留原意。",
       "files": [],
       "assertions": [
@@ -233,6 +233,42 @@
           "id": "literal-breaks-preserved",
           "text": "完整保留代码块中两条 printf 命令及其换行、字面反斜杠字符，并保留引用第一行末尾用于换行的两个空格。",
           "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "prompt": "刚才的正式文档已经写完了。接下来只是聊天：API 和 SDK 有什么区别？用简单的 Markdown 表格解释，不用做文档排版检查。",
+      "expected_output": "直接用简短表格解释区别，不把前一个文档任务的规范延伸到当前聊天，不加载格式参考或附带格式审阅。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "answer-current-question",
+          "type": "semantic",
+          "text": "直接解释 API 和 SDK 的区别，不因技术名词或表格而把回答当作正式文档。"
+        },
+        {
+          "id": "no-style-workflow",
+          "type": "semantic",
+          "text": "不读取格式参考、不执行或汇报全套格式检查，也不询问是否需要改为正式文档。"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "prompt": "把这两点整理成随手备忘，在聊天里给我就好，不用严格规范：明天试一下Node.js 22；看看10GB空间够不够。",
+      "expected_output": "简短整理备忘，保留试用计划和容量疑问，不将随手记录升级为正式文档任务；自然使用常规标点和空格即可。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "informal-output",
+          "type": "semantic",
+          "text": "只交付简短备忘，不增加正式文档章节、格式检查报告或规范说明。"
+        },
+        {
+          "id": "no-unnecessary-loading",
+          "type": "semantic",
+          "text": "不读取格式参考，不要求用户确认文档类型；允许自然写出常规中文格式。"
         }
       ]
     }
