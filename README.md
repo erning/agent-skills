@@ -153,8 +153,6 @@ ln -s /absolute/path/to/git-commit-writer \
 ```text
 agent-skills/
 ├── <skill-name>/       # 技能源文件：SKILL.md、参考资料、脚本、评估用例等
-├── .agents/skills/     # 本仓库维护时使用的部分技能的符号链接
-├── .claude/skills/     # 同上，供 Claude Code 发现
 ├── AGENTS.md           # 面向 coding agents 的维护说明
 ├── CLAUDE.md           # 指向 AGENTS.md 的符号链接
 ├── upstreams.json      # 第三方技能的上游配置

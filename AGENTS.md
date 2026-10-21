@@ -10,9 +10,10 @@ This repository develops skills; user-level skill directories contain
 installed copies. Work in the top-level source directories. Installation and
 changes to user-level copies are separate tasks.
 
-Keep `.agents/skills/` and `.claude/skills/` entries as relative symlinks to
-the selected source skills. Keep `CLAUDE.md` as a symlink to `AGENTS.md`. Read
-nested `AGENTS.md` files when working in their subtree; `humanizer/` has
+The repository has no project-level skill links, so agents load the installed
+copies. A changed source skill takes effect only after its installed copy is
+updated. Keep `CLAUDE.md` as a symlink to `AGENTS.md`. Read nested
+`AGENTS.md` files when working in their subtree; `humanizer/` has
 package-specific rules. There is no repository-wide build step.
 
 ## Editing Skills and Documentation

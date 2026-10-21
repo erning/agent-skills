@@ -1,11 +1,5 @@
-# Agent skills
-!.agents/skills/
-!.agents/skills/**
-
 # Claude Code
-.claude/*
-!.claude/skills/
-!.claude/skills/**
+.claude/
 
 # Skill development workspaces
 *-workspace/
