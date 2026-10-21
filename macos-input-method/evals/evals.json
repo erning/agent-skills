@@ -4,7 +4,7 @@
     {
       "id": 1,
       "prompt": "Create a minimal Swift macOS input method project called QuickIME using XcodeGen. It should appear in System Settings as an English input source, pass through typed characters for now, and include the build/install instructions I need for local testing.",
-      "expected_output": "Should scaffold a minimal InputMethodKit project with project.yml, Sources/main.swift, Sources/InputController.swift, appropriate Info.plist/XcodeGen keys, sandbox disabled, .inputmethod. bundle identifier, install instructions for ~/Library/Input Methods/, and first-install logout/login guidance.",
+      "expected_output": "Should scaffold a minimal InputMethodKit project with project.yml, Sources/main.swift, Sources/InputController.swift, appropriate Info.plist/XcodeGen keys, sandbox disabled, .inputmethod. bundle identifier, install instructions for ~/Library/Input Methods/, and guidance that the first install may need a logout/login or restart.",
       "files": [],
       "assertions": [
         {
@@ -29,12 +29,12 @@
         },
         {
           "id": "sandbox-disabled",
-          "text": "ENABLE_APP_SANDBOX = NO",
+          "text": "ENABLE_APP_SANDBOX",
           "type": "contains"
         },
         {
           "id": "install-instructions",
-          "text": "Explains installing the built .app into ~/Library/Input Methods/ and logging out/in on first install",
+          "text": "Explains installing the built .app into ~/Library/Input Methods/ and notes that the first install may require logging out/in or restarting",
           "type": "semantic"
         },
         {

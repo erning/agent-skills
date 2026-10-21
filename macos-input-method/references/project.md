@@ -145,7 +145,10 @@ targets:
       ENABLE_APP_SANDBOX: NO
 ```
 
-The `info.properties` block injects the keys into the generated Info.plist. If
+The `info.properties` block injects the keys into the generated Info.plist,
+and `xcodegen generate` overwrites the file at `info.path`. Keep these keys in
+`project.yml` or in a hand-maintained Info.plist, not both; the plist shown
+above only illustrates the resulting entries. If
 an icon is available, add its real file to the resources build phase and set
 `tsInputMethodIconFileKey` to its bundled name. Omit the key when no asset
 exists.

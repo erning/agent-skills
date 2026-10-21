@@ -89,8 +89,9 @@ When using this pattern, add to Info.plist:
 
 ## Input Handling Approaches
 
-IMKInputController supports three mutually exclusive input handling
-approaches. Choose one:
+IMKInputController supports three input handling approaches. Choose one per
+controller; implementing several lets multiple entry points interact (see
+the precedence note after Approach 3):
 
 ### Approach 1: Text-level (recommended for simple input methods)
 
@@ -142,8 +143,8 @@ override func handle(_ event: NSEvent!, client sender: Any!) -> Bool {
 }
 ```
 
-If both `inputText` and `handle` are implemented, `handle` takes precedence
-for key events.
+If both `inputText` and `handle` are implemented, `handle` can take
+precedence for key events, so the text-level methods may never be called.
 
 ---
 
@@ -459,7 +460,9 @@ method has several durable modes, the mode IDs and their ordering matter.
 
 ## Programmatic Registration
 
-Register an input method without requiring logout - useful in install scripts:
+Register an input method programmatically - useful in install scripts. This
+can avoid a logout in some cases but does not guarantee that the source
+appears in System Settings:
 
 ```swift
 import Carbon
@@ -499,16 +502,17 @@ access these functions.
   `com.apple.security.temporary-exception.mach-register.global-name`
   entitlement.
 
-- **No App Store distribution**: Apple does not allow InputMethodKit apps on
-  the Mac App Store.
+- **App Store distribution**: Registering the server needs a Mach service
+  that App Sandbox blocks by default (see above). Verify the current App
+  Store requirements before planning a Mac App Store release.
 
 - **Xcode debugging limitations**: Input methods must be installed to
   `~/Library/Input Methods/` and launched by the system. You cannot run them
   directly from Xcode. Use `NSLog` + Console.app for debugging.
 
 - **First-install discovery**: macOS discovers new input sources at login
-  time. The very first install requires a logout/login cycle. Subsequent
-  updates only need a process restart.
+  time. The very first install may require a logout/login cycle or restart.
+  Subsequent updates usually only need a process restart.
 
 - **`print()` does not work**: stdout is not connected for background
   processes launched by `imklaunchagent`. Always use `NSLog()`.
@@ -539,7 +543,7 @@ access these functions.
 - `menu()`:
   https://developer.apple.com/documentation/inputmethodkit/imkinputcontroller/menu%28%29
 - `doCommand(by:command:)`:
-  https://developer.apple.com/documentation/inputmethodkit/imkinputcontroller/1385553-docommand
+  https://developer.apple.com/documentation/inputmethodkit/imkinputcontroller/docommand%28by%3Acommand%3A%29
 - `NSTextInputClient`:
   https://developer.apple.com/documentation/appkit/nstextinputclient
 - Apple QA1810:
