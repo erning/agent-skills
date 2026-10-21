@@ -15,14 +15,14 @@
 | [`git-crypt`](git-crypt/SKILL.md) | 使用 git-crypt 配置文件加密、管理访问权限和排障；按需处理已有明文并区分暂存与提交验证 |
 | [`git-commit-writer`](git-commit-writer/SKILL.md) | 撰写、检查或修改提交信息，采用英文 ASCII Conventional Commits 格式并要求有用的正文 |
 | [`humanizer`](humanizer/SKILL.md) | 修订 AI 味较重的文本，保留事实和作者语气；使用上游原版 |
-| [`humanizer-zh`](Humanizer-zh/SKILL.md) | 润色中文文本或专项审阅套话、夸张表述和机械句式，保留事实与作者语气；一般阅读、事实与逻辑审查不触发 |
+| [`humanizer-zh`](humanizer-zh/SKILL.md) | 编辑中文文章、评论和文档中的空话、重复及模板化表达，保留事实、确定程度和作者声音；使用上游原版 |
 | [`macos-input-method`](macos-input-method/SKILL.md) | 使用 InputMethodKit 创建、修改、安装和调试 macOS 输入法，按任务读取项目、安装和排障指南 |
 
-表中的名称用于安装。`humanizer-zh` 的源码目录是 `Humanizer-zh/`，两者大小写不同。`git-commit-writer` 使用英文说明，提交信息要求英文 ASCII；仅约束提交信息本身，不额外规定检查改动、暂存或执行提交的流程。附带脚本只在明确要求校验提交信息时运行。中文技术文档同时涉及术语和排版时，先规范术语，再统一格式。
+表中的名称用于安装。`git-commit-writer` 使用英文说明，提交信息要求英文 ASCII；仅约束提交信息本身，不额外规定检查改动、暂存或执行提交的流程。附带脚本只在明确要求校验提交信息时运行。中文技术文档同时涉及术语和排版时，先规范术语，再统一格式。
 
 `erning-obsidian-capture` 包含 Erning 的个人仓库和本地路径约定，专用于 `erning/Obsidian-Notes`。明确说“记到我的 Obsidian”即可指定目标；本次对话确定目标后可简称“记一下”。它默认只保存本地 Markdown 文件，提交和推送按明确请求或已有授权执行。
 
-`humanizer-zh` 与 `chinese-doc-style` 可独立使用。前者处理表达问题，后者处理正式文档的书写规范；两者的专项审阅均可只报告问题，是否改稿由用户请求决定。仅阅读、总结或比较内容不会因此加载它们。正式文档需要专门润色时，先处理表达，再检查术语和格式；仅排版时保留原有表达。
+`humanizer-zh` 与 `chinese-doc-style` 可独立使用。前者处理表达问题，后者处理正式文档的书写规范。正式文档需要专门润色时，先处理表达，再检查术语和格式；仅排版时保留原有表达。
 
 `chinese-doc-style` 和 `chinese-stem-terminology` 仅在处理正式文档时自动调用。聊天中起草供发布、交付或评审的文档仍适用；普通聊天、概念解释、代码讨论、临时翻译和随手记录不自动调用，即使包含技术名词、表格或 Markdown。没有正式文档用途，或用户说明不必严格规范时，按普通交流处理；文档规范不延续到过程说明和后续闲聊。用户明确要求使用某个 skill 时，按其指定范围处理。
 
@@ -172,7 +172,7 @@ agent-skills/
 | 同步名称 | 目录 | 上游 |
 | --- | --- | --- |
 | `humanizer` | `humanizer/` | [`blader/humanizer`][humanizer] |
-| `humanizer-zh` | `Humanizer-zh/` | [`op7418/Humanizer-zh`][humanizer-zh] |
+| `humanizer-zh` | `humanizer-zh/` | [`op7418/Humanizer-zh`][humanizer-zh] |
 
 [humanizer]: https://github.com/blader/humanizer
 [humanizer-zh]: https://github.com/op7418/Humanizer-zh
@@ -247,6 +247,4 @@ just sync example-skill
 
 脚本从配置的 `ref` 拉取内容，使用 `--squash` 创建同步提交，不会导入完整的上游提交历史。完成后检查差异，并按所更新技能的维护说明运行相关验证。
 
-`humanizer/` 保留已同步的上游原版，沿用上游格式和校验规则，仅在存在具体使用问题时考虑本地修复。
-
-`Humanizer-zh/` 以用户确认的中文适配和行为修订为准，具体差异记录在其 README 中。同步上游时逐项合并适用改动；发生冲突时优先保留本地约定，并保留上游来源和许可证。
+`humanizer/` 和 `humanizer-zh/` 都保留已同步的上游原版，沿用上游格式和校验规则，仅在存在具体使用问题时考虑本地修复，并与同步提交分开提交。

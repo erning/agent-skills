@@ -4,7 +4,6 @@
     "ref": "main"
   },
   "humanizer-zh": {
-    "target_path": "Humanizer-zh",
     "repository": "https://github.com/op7418/Humanizer-zh.git",
     "ref": "main"
   }

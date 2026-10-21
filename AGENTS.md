@@ -19,8 +19,7 @@ package-specific rules. There is no repository-wide build step.
 ## Editing Skills and Documentation
 
 - New skill directories and frontmatter names use lowercase with hyphens, such
-  as `git-crypt`. Preserve the vendored `Humanizer-zh/` directory; its
-  frontmatter name and installation selector are `humanizer-zh`.
+  as `git-crypt`.
 - Treat `SKILL.md` as the source of truth for a skill's behavior. Keep related
   examples, references, evaluation cases, and `agents/openai.yaml` consistent
   when changing that behavior.
@@ -93,17 +92,15 @@ directories.
 ## Third-Party Skills
 
 `upstreams.json` is the source of truth for upstream sync. Currently it maps
-`humanizer` to `humanizer/` and `humanizer-zh` to `Humanizer-zh/`. These
+`humanizer` to `humanizer/` and `humanizer-zh` to `humanizer-zh/`. These
 directories are squashed Git subtrees, not submodules. Preserve their upstream
 metadata, licenses, and directory names.
 
-Keep `humanizer/` identical to the imported upstream version unless a concrete
-usage problem requires a local fix. Preserve its upstream formatting and
-validation rules; do not rewrap it to match this repository's line width.
-
-Maintain `Humanizer-zh/` as a locally customized skill. Its user-approved
-behavior and Chinese adaptations take precedence during upstream sync. Review
-upstream changes and preserve these local choices when resolving conflicts.
+Keep `humanizer/` and `humanizer-zh/` identical to the imported upstream
+versions unless a concrete usage problem requires a local fix. Preserve their
+upstream formatting and validation rules; do not rewrap them to match this
+repository's line width. Keep any local fix focused and separate from the
+upstream sync commit.
 
 For an upstream update, use `just sync <name>` or
 `./scripts/sync-upstream-skills.sh <name>` rather than copying files manually.
