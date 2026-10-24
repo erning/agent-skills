@@ -1,6 +1,6 @@
 # Agent Skills
 
-个人维护的编程智能体技能（Agent Skills）集合，涵盖中文文档、术语、文本润色、Git 工作流、会话命名、个人 Obsidian 笔记记录和 macOS 输入法开发。每个技能都是独立目录，包含 `SKILL.md` 以及可选的脚本、参考资料和评估用例，可以按需安装。
+个人维护的编程智能体技能（Agent Skills）集合，涵盖中文文档、术语、文本润色、提交信息和个人 Obsidian 笔记记录。每个技能都是独立目录，包含 `SKILL.md` 以及可选的脚本、参考资料和评估用例，可以按需安装。
 
 这些技能可通过 [`skills`](https://github.com/vercel-labs/skills) CLI 安装到 Codex、Claude Code 等支持 Agent Skills 的编程智能体。具体任务需要的工具和依赖见各技能的 `SKILL.md`。
 
@@ -10,13 +10,10 @@
 | --- | --- |
 | [`chinese-doc-style`](chinese-doc-style/SKILL.md) | 撰写、修改正式中文文档或专项审阅其格式，规范混排、标点和专名；日常聊天和非正式记录不自动调用 |
 | [`chinese-stem-terminology`](chinese-stem-terminology/SKILL.md) | 撰写、翻译、修改或审校正式 STEM 文档，规范中国大陆中文术语；技术问答、临时翻译和非正式笔记不自动调用 |
-| [`conversation-namer`](conversation-namer/SKILL.md) | 按 `MMDD｜类型｜主题` 规范会话标题，默认使用中文，以原始创建时间换算上海时区日期；默认预览确认，复用已有明确授权 |
 | [`erning-obsidian-capture`](erning-obsidian-capture/SKILL.md) | 将交流、总结或指定内容保存到 Erning 的个人 Obsidian Notes；要求明确指定该库或沿用本次对话已确定的记录目标，默认写入 `Daily/YYYY-MM-DD/`，仅保存本地文件 |
-| [`git-crypt`](git-crypt/SKILL.md) | 使用 git-crypt 配置文件加密、管理访问权限和排障；按需处理已有明文并区分暂存与提交验证 |
 | [`git-commit-writer`](git-commit-writer/SKILL.md) | 撰写、检查或修改提交信息，采用英文 ASCII Conventional Commits 格式并要求有用的正文 |
 | [`humanizer`](humanizer/SKILL.md) | 修订 AI 味较重的文本，保留事实和作者语气；使用上游原版 |
 | [`humanizer-zh`](humanizer-zh/SKILL.md) | 编辑中文文章、评论和文档中的空话、重复及模板化表达，保留事实、确定程度和作者声音；使用上游原版 |
-| [`macos-input-method`](macos-input-method/SKILL.md) | 使用 InputMethodKit 创建、修改、安装和调试 macOS 输入法，按任务读取项目、安装和排障指南 |
 
 表中的名称用于安装。`git-commit-writer` 使用英文说明，提交信息要求英文 ASCII；仅约束提交信息本身，不额外规定检查改动、暂存或执行提交的流程。附带脚本只在明确要求校验提交信息时运行。中文技术文档同时涉及术语和排版时，先规范术语，再统一格式。
 
@@ -76,8 +73,6 @@ npx skills add erning/agent-skills \
 请使用 chinese-stem-terminology，审校即将发给学生的正式物理讲义 physics-handout.md，使用中国大陆常用译名。
 
 请使用 git-commit-writer，为当前改动起草提交信息。
-
-请使用 conversation-namer，规范当前项目的会话标题，先展示预览。
 
 请使用 erning-obsidian-capture，把这次排查过程记到我的 Obsidian Notes。
 ```

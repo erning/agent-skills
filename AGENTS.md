@@ -19,7 +19,7 @@ package-specific rules. There is no repository-wide build step.
 ## Editing Skills and Documentation
 
 - New skill directories and frontmatter names use lowercase with hyphens, such
-  as `git-crypt`.
+  as `git-commit-writer`.
 - Treat `SKILL.md` as the source of truth for a skill's behavior. Keep related
   examples, references, evaluation cases, and `agents/openai.yaml` consistent
   when changing that behavior.
