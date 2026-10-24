@@ -21,8 +21,9 @@ launched by the system. Preserve the target project's build tools and layout.
 - Diagnose discovery, connection, controller, or event-handling failures:
   [references/troubleshooting.md](references/troubleshooting.md).
 - Implement marked text, candidates, menus, lifecycle hooks, or registration:
-  search the relevant section of
-  [references/imkit-api.md](references/imkit-api.md).
+  [references/imkit-api.md](references/imkit-api.md), a large file. Run
+  `rg -n '^## ' references/imkit-api.md` to find section lines, then read only
+  the relevant section with `offset`/`limit`.
 
 Read only what the task needs. A candidate-window change normally does not
 need project scaffolding or installation instructions.

@@ -160,6 +160,24 @@
           "type": "semantic"
         }
       ]
+    },
+    {
+      "prompt": "Add a second page of candidates to my existing InputMethodKit input method; the candidates window currently shows only the first page. The project is an Xcode app with an IMKInputController subclass. Reference files live under references/.",
+      "expected_output": "Locate the candidate-window section of references/imkit-api.md with a heading search and read only that section; do not read the whole file or the project and installation references.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "section-only",
+          "text": "Finds the relevant section of references/imkit-api.md with a heading search and reads only that range, not the whole file.",
+          "type": "semantic"
+        },
+        {
+          "id": "no-unrelated-refs",
+          "text": "Does not load the project scaffolding, installation, or troubleshooting references for this candidate-window change.",
+          "type": "semantic"
+        }
+      ],
+      "id": 6
     }
   ]
 }
