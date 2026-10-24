@@ -24,12 +24,15 @@ agent that owns the conversations.
   requested, without unarchiving them. Read all pages needed to cover the
   scope.
 - Prefer the target agent's supported management tools, commands, API, or UI.
-  Before editing local storage, establish its format and title-update
-  mechanism. Do not assume another agent's tools, fields, or storage layout
-  apply.
+  For pi, read [references/agents.md](references/agents.md) instead of
+  rediscovering its storage. For any other agent, use its supported
+  mechanism; edit local storage only after establishing its format and
+  title-update mechanism. Do not assume another agent's tools, fields, or
+  storage layout apply.
 - Collect stable IDs or equally unambiguous locators, current titles, scope,
-  original creation times, and enough content or reliable summaries to infer
-  topics. Display names and preview row numbers are not reliable locators.
+  original creation times, and each conversation's first user message when
+  the title alone does not reveal the topic. Display names and preview row
+  numbers are not reliable locators.
 - If only exports or read access are available, explain that limitation before
   showing suggested titles. Do not present a preview as completed renaming.
 
@@ -70,7 +73,7 @@ at the end does not make that conversation a release task.
 | Chinese label (default) | English code | Purpose |
 | --- | --- | --- |
 | 功能 | FEA | Add functionality or capabilities |
-| 设计 | DES | Design behavior, architecture, interfaces, or implementation plans |
+| 设计 | DES | Design behavior, architecture, interfaces, or plans |
 | 修复 | FIX | Diagnose or fix defects |
 | 优化 | OPT | Improve behavior, performance, or usability |
 | 发布 | REL | Prepare, publish, or deliver a release or change |
@@ -79,18 +82,17 @@ at the end does not make that conversation a release task.
 | 研究 | RES | Investigate questions through sources, evidence, or comparisons |
 
 Default to Chinese type labels and Simplified Chinese topics. Use English
-codes only when explicitly requested for types or whole titles; use English
-topics only when explicitly requested for topics or whole titles. A request
-for one field's language does not change the other field. The language of
-these instructions, the user request, or the existing conversation does not
-change these defaults. Keep the type-label language consistent within each
-batch of new titles; individual conversations may use different types.
+codes or topics only when explicitly requested for that field or for whole
+titles; a request for one field does not change the other. The language of
+the user request or the existing conversation does not change these defaults.
+Keep the type-label language consistent within a batch.
 
 ### Topic
 
-- Use a short, specific phrase suitable for a sidebar or terminal list. Read
-  more content when summaries are insufficient. Keep the existing title if the
-  topic or type remains uncertain.
+- Use a short, specific phrase suitable for a sidebar or terminal list. Infer
+  it from the title and first user message; read further only for entries
+  that remain unclear. Keep the existing title if the topic or type remains
+  uncertain.
 - Avoid repeating project or group names and vague topics such as "discussion"
   or "miscellaneous fixes". Preserve useful technical names and identifiers.
 - Do not put another `｜` or a line break inside the topic.
@@ -98,24 +100,8 @@ batch of new titles; individual conversations may use different types.
   meet the requested rules. Replace an existing prefix instead of stacking
   prefixes.
 
-Examples assume creation metadata produces the dates shown and conversation
-content supports the topics; do not infer those facts from the old titles
-alone.
-
-Default Chinese titles:
-
-| Before | After |
-| --- | --- |
-| Improve batch text display | 0903｜优化｜批次文字显示 |
-| Design alignment checks | 0901｜设计｜界面对齐检查 |
-| Prepare v1.0 release | 0813｜发布｜准备 v1.0 发布 |
-
-When the user explicitly requests English titles:
-
-| Before | After |
-| --- | --- |
-| 优化批次文字显示 | 0903｜OPT｜Batch text display |
-| 新功能讨论 | 0901｜DES｜UI alignment check |
+Examples: `0903｜优化｜批次文字显示`, `0901｜设计｜界面对齐检查`; with
+explicit English requests, `0903｜OPT｜Batch text display`.
 
 ## Preview and authorization
 
@@ -138,17 +124,18 @@ title, and proposed title.
 
 ## Apply and verify
 
-Update only authorized entries whose titles need changing. Before each write,
-recheck the retained stable ID, current title, and scope. If the title or
-scope has changed since preparation, skip that entry and report the conflict.
-When approval covered only the listed entries, newly discovered conversations
-require separate authorization.
+Update only authorized entries whose titles need changing. Immediately before
+writing, list the scope once more and compare every retained ID, current
+title, and scope with the plan. Skip and report entries that changed; write
+the rest in one batch without per-entry rechecks. When approval covered only
+the listed entries, newly discovered conversations require separate
+authorization.
 
-Use the established update mechanism. After a timeout or uncertain response,
-read the current title before retrying; if it already matches, do not write it
-again. Verify the final title by rereading or using the update response's
-final value. Stop retrying when success cannot be established or further
-action would exceed the authorized scope.
+Use the established update mechanism and trust each update's success result
+as the final value. Reread a title only after a timeout or uncertain
+response, and do not write it again if it already matches. Stop retrying when
+success cannot be established or further action would exceed the authorized
+scope.
 
 Report renamed, unchanged, skipped, and failed entries with brief reasons
 where needed. Do not claim unverified success or append unrelated suggestions,

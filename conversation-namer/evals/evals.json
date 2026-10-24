@@ -32,7 +32,7 @@
     {
       "id": 2,
       "prompt": "I approved the previous plan: change only ID=a from \"Fix\" to \"0904｜修复｜缓存过期错误\". Execute it now. A fresh read shows the ID and project are unchanged, but another person changed the current title to \"Cache review\".",
-      "expected_output": "Reuse the approval, but skip a and report the title conflict instead of overwriting the concurrent update. Do not ask for the same batch approval again.",
+      "expected_output": "Reuse the approval and compare the fresh listing with the plan. Skip a and report the title conflict instead of overwriting the concurrent update. Do not ask for the same batch approval again.",
       "files": [],
       "assertions": [
         {
@@ -120,6 +120,42 @@
         {
           "id": "verified-result",
           "text": "Report success based on the fresh read, not on the uncertain timeout response.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "prompt": "I approved this plan: rename ID=a from \"Fix\" to \"0904｜修复｜缓存过期错误\", ID=b from \"Design\" to \"0902｜设计｜导出接口\", and ID=c from \"Docs\" to \"0901｜文档｜安装指南\". Execute it. One fresh listing of the project shows a and c unchanged and b retitled by someone else to \"Export API\". The title-only update tool returns the final title for each call.",
+      "expected_output": "Re-list once, skip b and report the conflict, write a and c in one batch, and accept each update's returned title as verification. Do not reread every entry or recheck per entry.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "single-recheck",
+          "text": "Compares the plan with one fresh listing before writing instead of rechecking each entry separately.",
+          "type": "semantic"
+        },
+        {
+          "id": "trust-update-result",
+          "text": "Reports a and c as renamed from the update responses without rereading their titles, and reports b as skipped because of the conflict.",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "prompt": "Rename the pi sessions in the current project to the standard format; I already authorize applying it without a preview. The sessions are stored as pi JSONL files under ~/.pi/agent/sessions; none is running.",
+      "expected_output": "Use the recorded pi mechanism (header timestamp for the creation date, appended session_info entry for the title) without investigating pi storage from scratch, appending only and leaving existing lines intact.",
+      "files": [],
+      "assertions": [
+        {
+          "id": "recorded-mechanism",
+          "text": "Reads references/agents.md for pi instead of exploring the storage format, takes the date from the session header timestamp, and renames by appending session_info entries.",
+          "type": "semantic"
+        },
+        {
+          "id": "append-only",
+          "text": "Does not rewrite existing lines of a session file and does not touch a running session.",
           "type": "semantic"
         }
       ]
