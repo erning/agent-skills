@@ -4,12 +4,12 @@
     {
       "id": 1,
       "prompt": "把这个总结记到我的 Obsidian Notes，日期用 2026-09-09，文件名 cache-expiry.md：缓存过期后仍返回旧值；已修正过期判断，回归测试通过；批量失效方案只是建议，还没实现。测试环境只有 ~/Projects/Obsidian/Notes 存在，它是 Git 根目录，origin 为 git@github.com:erning/Obsidian-Notes.git；根 AGENTS.md 要求 Markdown 文档和中文正文；已有一份无关的暂存修改及一份未跟踪笔记。",
-      "expected_output": "直接在已验证的大写 Projects 路径下创建 Daily/2026-09-09/cache-expiry.md，保留已完成修复和未实现建议的区别，读取验证后报告绝对路径。保留其他改动，不自动操作 Git 或再次要求保存确认。",
+      "expected_output": "用一次准备命令确认大写 Projects 路径和 origin，直接创建 Daily/2026-09-09/cache-expiry.md，保留已完成修复和未实现建议的区别，新笔记不再读回，最后只报告绝对路径。保留其他改动，不自动操作 Git 或再次要求保存确认。",
       "files": [],
       "assertions": [
         {
           "id": "uppercase-path",
-          "text": "在大写 Projects 的正确仓库中创建指定日期和文件名的笔记，并读取文件验证内容。",
+          "text": "在大写 Projects 的正确仓库中创建指定日期和文件名的笔记，仓库定位、日期和目录检查合并在一次准备调用中，并读取根 AGENTS.md。",
           "type": "semantic"
         },
         {
@@ -20,6 +20,11 @@
         {
           "id": "authorization-and-facts",
           "text": "不重复询问写入授权，准确区分修复完成、测试通过和尚未实现的建议。",
+          "type": "semantic"
+        },
+        {
+          "id": "low-overhead",
+          "text": "新建笔记后不读回文件、不查看 diff、不复述笔记内容，不扫描其他笔记或上级目录的 AGENTS.md，最终回复只给出绝对路径和“新建”状态。",
           "type": "semantic"
         }
       ]
@@ -45,7 +50,7 @@
     {
       "id": 3,
       "prompt": "把结论记到我的 Obsidian Notes：保留现有备份方案。这次使用 ~/work/Notes。测试环境中这个路径是正确的 Git 仓库根目录，origin 为 git@github.com:erning/Obsidian-Notes.git；默认路径 ~/Projects/Obsidian/Notes 也存在。",
-      "expected_output": "优先验证并使用明确指定的 ~/work/Notes，直接保存笔记，不额外比较默认路径或询问使用哪个位置。",
+      "expected_output": "优先使用明确指定的 ~/work/Notes，通过 origin 确认身份后直接保存笔记，不额外比较默认路径或询问使用哪个位置。",
       "files": [],
       "assertions": [
         {
@@ -57,8 +62,8 @@
     },
     {
       "id": 4,
-      "prompt": "用 $erning-obsidian-capture 保存这次结论，Notes 在 ~/work/Notes。该路径属于 company/team-docs 仓库内部的子目录；默认路径中另外存在正确的个人 Notes 仓库。结论是暂时继续使用现有缓存策略。",
-      "expected_output": "指出指定路径的仓库根目录和身份不匹配，在写入前解决目标问题；不改远程地址，也不悄悄回退到默认个人仓库。",
+      "prompt": "用 $erning-obsidian-capture 保存这次结论，Notes 在 ~/work/Notes。该路径属于 company/team-docs 仓库内部的子目录，其 origin 为 git@github.com:company/team-docs.git；默认路径中另外存在正确的个人 Notes 仓库。结论是暂时继续使用现有缓存策略。",
+      "expected_output": "通过 origin 发现指定路径不是 erning/Obsidian-Notes，在写入前说明不匹配并解决目标问题；不改远程地址，也不悄悄回退到默认个人仓库。",
       "files": [],
       "assertions": [
         {
@@ -71,7 +76,7 @@
     {
       "id": 5,
       "prompt": "记到我的 Obsidian Notes，作为一篇独立的新笔记，日期用 2026-09-09，文件名先用 cache-debugging.md：这次 Redis 键过期时间配置错误，已修正并验证。正确仓库的 Daily/2026-09-09/cache-debugging.md 已存在，内容是此前浏览器缓存排查；用户没有要求改写那篇笔记。",
-      "expected_output": "读取同名文件后保留原文，为 Redis 主题选择更具体且不冲突的文件名，创建并验证新笔记。",
+      "expected_output": "从目录列表发现同名文件后保留原文，不读取、覆盖或追加，为 Redis 主题选择更具体且不冲突的文件名并创建新笔记，报告实际路径。",
       "files": [],
       "assertions": [
         {
@@ -110,7 +115,7 @@
     {
       "id": 8,
       "prompt": "刚才的草稿和路径 Daily/2026-09-09/backup-plan.md 都确认了，写入我的 Obsidian Notes。随后首次写入工具超时，没有明确返回结果；重新读取这个路径，发现文件已完整包含批准的草稿。",
-      "expected_output": "复用已有授权，以重新读取的实际文件核实成功，报告原路径，不再次写入、重复追加或创建编号副本。",
+      "expected_output": "复用已有授权，重新读取实际文件核实成功，报告原路径，不再次写入、重复追加或创建编号副本。",
       "files": [],
       "assertions": [
         {
@@ -186,6 +191,24 @@
         {
           "id": "lowercase-fallback",
           "text": "按大写 Projects 优先、小写 projects 备用的顺序定位，在大写路径不存在时使用已有的小写路径，不另建目录或要求用户重复指定路径。",
+          "type": "semantic"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "prompt": "把这个排查结论记到我的 Obsidian Notes：Redis 连接池耗尽是因为未释放连接，已修复并通过压测。正确仓库在默认路径，根 AGENTS.md 存在；Daily 目录下另有多篇无关笔记，其中一篇提到了 Redis。",
+      "expected_output": "一次准备命令后直接写入简洁草稿，不阅读无关笔记，不为添加 wikilink 搜索 vault，不读回，最终只报告路径。",
+      "files": [],
+      "assertions": [
+        {
+          "id": "no-extra-scan",
+          "text": "新建笔记时不阅读或搜索其他笔记，不为链接而检索 vault，也不逐级读取上级目录的 AGENTS.md。",
+          "type": "semantic"
+        },
+        {
+          "id": "draft-and-minimal-report",
+          "text": "笔记为简洁草稿，保留“已修复并通过压测”的事实；写入成功后不读回、不复述内容，只报告绝对路径和状态。",
           "type": "semantic"
         }
       ]
